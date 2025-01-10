@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid Layout Example</title>
+    <style>
+        /* Global body styles */
+        body {
+            display: grid;
+            grid-template-rows: 1fr 1.5fr 6fr 1.5fr; /* Row heights */
+            grid-template-columns: 1fr 8fr 1fr; /* Column widths */
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header Section */
+        .header {
+            grid-row: 1 / 2;
+            grid-column: 1 / 4;
+            background-color: rgb(171, 221, 238);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        /* Header Image */
+        .header img {
+            height: 100px; /* Image height */
+            width: auto; /* Maintain aspect ratio */
+            margin-right: 20px; /* Spacing between logo and text */
+        }
+
+        /* Header Text */
+        .header h1 {
+            margin: 0;
+            font-size: 4rem;
+            color: white;
+        }
+
+        /* Placeholder Sections */
+        .one {
+            grid-row: 2 / 3;
+            grid-column: 1 / 4;
+        }
+
+        .two {
+            grid-row: 3 / 4;
+            grid-column: 1 / 2;
+        }
+
+        .login {
+            grid-row: 3 / 4;
+            grid-column: 2 / 3;
+            background-color:  white;/* Light gray */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login form {
+            display: flex;
+            flex-direction: column;
+            width: 80%;
+            max-width: 400px;
+            background: rgba(224, 224, 224, 0.753);
+            padding: 20px;
+            border-radius: 8px;
+            
+        }
+
+        .login form input {
+            margin-bottom: 15px;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .login form button {
+            padding: 10px;
+            font-size: 1rem;
+            color: white;
+            background-color: rgb(0, 28, 88);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .login form button:hover {
+            background-color: rgb(0, 50, 150);
+        }
+        .login form a:hover {
+            color: rgb(0, 50, 150);
+        }
+        .login a{
+            margin-top: 20px;
+            font-size: 1rem;
+        }
+        .three {
+            grid-row: 3 / 4;
+            grid-column: 3 / 4;
+        }
+
+        .four {
+            grid-row: 4 / 5;
+            grid-column: 1 / 4;
+        }
+        .login h1 {
+            margin-bottom: 15px;
+            font-size: 2rem;
+            color: rgb(0, 0, 0);
+
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="header">
+        <img src="logo.png" alt="Logo">
+        <h1 style="color: rgb(0, 28, 88);">SKYPE</h1>
+    </div>
+
+    <!-- Grid Sections -->
+    <div class="one"></div>
+    <div class="two"></div>
+    <div class="login">
+        <form>
+            <center><h1>Login</h1></center>
+            <input type="text" placeholder="Username" required>
+            <input type="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+            <a href="">Forgot Password?</a>
+        </form>
+    </div>
+    <div class="three"></div>
+    <div class="four"></div>
+</body>
+</html>
