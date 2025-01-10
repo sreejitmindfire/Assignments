@@ -2,3 +2,18 @@
     display: flex;
     align-items: center;
 }
+
+.offset-1 {
+    margin-top: 2%;
+}
+
+#contact{
+    display: flex;
+    align-items: center;
+    margin: 1%;
+
+}
+.liinkk{
+    text-decoration: none; 
+    color: inherit;
+}
