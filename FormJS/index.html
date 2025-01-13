@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+    
+</head>
+<body>
+    <div class="col-12">
+        <div class="row">
+            <div class="col-3">
+                <div id="image" class="img__box"></div>
+                <div class="show">
+                    <h4>Name: </h4>
+                    <h4 id="name"></h4>
+                </div>
+                <div class="show">
+                    <h4>Email: </h4>
+                    <h4 id="email"></h4>
+                </div>
+                <div class="show">
+                    <h4>Phone: </h4>
+                    <h4 id="phone"></h4>
+                </div>
+                <button onclick="redirect_git()" class="btn btn-primary btn-lg">Github</button> <br>
+                <button onclick="redirect_link()" class="btn btn-primary btn-lg ">LinkedIn</button> <br>
+                <button onclick="reload_page()" class="btn btn-primary btn-lg">Reload</button>
+                
+            </div>
+
+
+            <div class="col-9">
+                <form id="myform" onsubmit="validateForm(event)">
+                    <div class="mb-3">
+                        <label for="Name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="Name" placeholder="Name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="Email" placeholder="name@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Phno" class="form-label">Phone</label>
+                        <input type="number" class="form-control" id="Phno" placeholder="xxxxxxxxxx" min="2002000000" max="9999999999">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Github" class="form-label">Github</label>
+                        <input type="url" class="form-control" id="Github" placeholder="github.com/username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Linkedin" class="form-label">Linkedin</label>
+                        <input type="url" class="form-control" id="Linkedin" placeholder="linkedin.com/in/username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Image" class="form-label">Image URL</label>
+                        <input type="url" class="form-control" id="Image" placeholder="Image URL">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function reload_page(){
+            location.reload(true);
+        }
+        let gIthub = "https://github.com";
+        let linkk = "https://www.linkedin.com";
+        function update_git(github){
+            gIthub = github;
+        }
+        function update_Link(linkedin){
+            linkk = linkedin;
+        }
+        function vlink(linkedin){
+            text = linkedin;
+            let indexa = text.indexOf("https://www.linkedin.com");
+            if(indexa == 0){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+        function vgit(github){
+            text = github;
+            let indexa = text.indexOf("https://github.com");
+            if(indexa == 0){
+                return false;
+            }
+            else{
+                return true;
+            }
+
+        }function vgit(github){
+            text = github;
+            let indexa = text.indexOf("https://github.com");
+            if(indexa == 0){
+                return false;
+            }
+            else{
+                return true;
+            }
+
+        }
+        function vimage(image_link){
+            text = image_link;
+            let indexa = text.indexOf("https://");
+            if(indexa == 0){
+                return false;
+            }
+            else{
+                return true;
+            }
+
+        }
+        
+        function vemail(email){
+            text = email;
+            let indexa = text.indexOf("@");
+            let indexdot = text.indexOf(".");
+            if((indexa > 0)&&(indexdot > indexa)){
+                return false;
+            }
+            else{
+                return true;
+            }
+
+        }
+        function validateForm(event){
+            
+            event.preventDefault();
+            let name = document.forms["myform"]["Name"].value;
+            let email = document.forms["myform"]["Email"].value;
+            let number = document.forms["myform"]["Phno"].value;
+            let github = document.forms["myform"]["Github"].value;
+            let linkedin = document.forms["myform"]["Linkedin"].value;
+            let img_link = document.forms["myform"]["Image"].value;
+            
+            
+            if (name == "") {
+                alert("Name must be filled out");
+                return false;
+            }
+            else if(vemail(email)){
+                alert("email should be valid");
+                return false;
+            }
+            else if(number==""){
+                alert("Phone number should be valid");
+                return false;
+            }
+            else if(vgit(github)){
+                alert("github should be valid");
+                return false;
+            }
+            else if(vlink(linkedin)){
+                alert("linkedin should be valid");
+                return false;
+            }
+            else if(vimage(img_link)){
+                alert("image link should be valid");
+                return false;
+            }
+            else{
+                let img = document.createElement('img');
+                img.src = img_link;
+                document.getElementById('image').appendChild(img);
+                
+                document.getElementById("name").innerHTML = name;
+                document.getElementById("email").innerHTML = email;
+                document.getElementById("phone").innerHTML = number;
+                update_git(github);
+                update_Link(linkedin);
+            }
+            
+
+            
+        }
+        function redirect_git(){
+            window.location.assign(gIthub);
+        }
+        function redirect_link(){
+            window.location.assign(linkk);
+        }
+        
+    </script>    
+</body>
+</html>
