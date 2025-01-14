@@ -9,26 +9,11 @@
     
 </head>
 <body>
-    <div class="col-12">
+    
+    <div class="col-12 hidden">
         <div class="row">
             <div class="col-3">
-                <div id="image" class="img__box"></div>
-                <div class="show">
-                    <h4>Name: </h4>
-                    <h4 id="name"></h4>
-                </div>
-                <div class="show">
-                    <h4>Email: </h4>
-                    <h4 id="email"></h4>
-                </div>
-                <div class="show">
-                    <h4>Phone: </h4>
-                    <h4 id="phone"></h4>
-                </div>
-                <button onclick="redirect_git()" class="btn btn-primary btn-lg">Github</button> <br>
-                <button onclick="redirect_link()" class="btn btn-primary btn-lg ">LinkedIn</button> <br>
-                <button onclick="reload_page()" class="btn btn-primary btn-lg">Reload</button>
-                
+                <script>document.write('<div class="card"><div class="card-body"><img src="https://cdn.pixabay.com/photo/2022/10/05/04/11/super-hero-7499630_1280.jpg" alt="" class = imggg><h5 class="card-title">Special title treatment</h5><p class="card-text">With supporting text below as a natural lead-in to additional content.</p><a href="#" class="btn btn-primary">Go somewhere</a></div></div>')</script>    
             </div>
 
 
@@ -58,6 +43,18 @@
                         <label for="Image" class="form-label">Image URL</label>
                         <input type="url" class="form-control" id="Image" placeholder="Image URL">
                     </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="Rad" id="local" value="local"> 
+                        <label class="form-check-label" for="session">
+                          Local Storage
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="Rad" id="session" value="session" checked>
+                        <label class="form-check-label" for="session">
+                          Session Storage
+                        </label>
+                      </div>
                     <button type="submit" class="btn btn-primary btn-lg">Submit</button>
                 </form>
             </div>
@@ -65,6 +62,8 @@
     </div>
     
     <script>
+        
+        
         function reload_page(){
             location.reload(true);
         }
@@ -78,8 +77,9 @@
         }
         function vlink(linkedin){
             text = linkedin;
-            let indexa = text.indexOf("https://www.linkedin.com");
-            if(indexa == 0){
+            let indexa = text.indexOf("https://linkedin.com");
+            let indexb = text.indexOf("https://www.linkedin.com");
+            if(indexa == 0 || indexb == 0){
                 return false;
             }
             else{
@@ -89,17 +89,8 @@
         function vgit(github){
             text = github;
             let indexa = text.indexOf("https://github.com");
-            if(indexa == 0){
-                return false;
-            }
-            else{
-                return true;
-            }
-
-        }function vgit(github){
-            text = github;
-            let indexa = text.indexOf("https://github.com");
-            if(indexa == 0){
+            let indexb = text.indexOf("https://github.com");
+            if(indexa == 0 || indexb == 0){
                 return false;
             }
             else{
@@ -132,7 +123,7 @@
 
         }
         function validateForm(event){
-            
+            indx = localStorage.length+1
             event.preventDefault();
             let name = document.forms["myform"]["Name"].value;
             let email = document.forms["myform"]["Email"].value;
@@ -140,7 +131,14 @@
             let github = document.forms["myform"]["Github"].value;
             let linkedin = document.forms["myform"]["Linkedin"].value;
             let img_link = document.forms["myform"]["Image"].value;
-            
+            let storages = document.getElementsByName('Rad');
+            let storage = null;
+            for (const radio of storages){
+                if(radio.checked){
+                    storage = radio.value;
+                    break;
+                }
+            }
             
             if (name == "") {
                 alert("Name must be filled out");
@@ -167,16 +165,23 @@
                 return false;
             }
             else{
-                let container = document.getElementById('image');
-                container.innerHTML = '';
-                let img = document.createElement('img');
-                img.src = img_link;
-                container.appendChild(img);
-                document.getElementById("name").innerHTML = name;
-                document.getElementById("email").innerHTML = email;
-                document.getElementById("phone").innerHTML = number;
-                update_git(github);
-                update_Link(linkedin);
+                let data = name + " " + email + " " + number + " " + github + " " + linkedin + " " + img_link
+                console.log(data);
+                if(storage == "local")
+                {
+                    console.log(indx);
+                    console.log("local");
+                    localStorage.setItem(indx, data);
+                    // localStorage.clear();
+                }
+                else if(storage == "session")
+                {
+                    console.log(indx);
+                    console.log("local");
+                    sessionStorage.setItem(indx, data);
+                    //sessionStorage.clear();
+                }
+
             }
             
 

@@ -2,7 +2,7 @@
     background-color: aqua;
     margin: 0%;
     height: 100vh;
-    padding: 5%;
+    padding: 1%;
 }
 .col-9{
     
@@ -17,16 +17,11 @@
 .row{
     width: 100%;
 }
-.img__box{
-    width: 70%;
-    height: 25vh;
-    border: 2px solid;
-    margin-bottom: 10%;
-}
-.img__box img{
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+.imggg{
+    float: left;
+    width: 20%;
+    height: auto;
+    margin:1%;
 }
 .show{
     display: flex;
@@ -35,4 +30,10 @@
 }
 .btn{
     margin-bottom: 5%;
+}
+.form-check{
+    margin-bottom: 2%;
+}
+.card{
+    margin: 1%;
 }
