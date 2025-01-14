@@ -167,10 +167,11 @@
                 return false;
             }
             else{
+                let container = document.getElementById('image');
+                container.innerHTML = '';
                 let img = document.createElement('img');
                 img.src = img_link;
-                document.getElementById('image').appendChild(img);
-                
+                container.appendChild(img);
                 document.getElementById("name").innerHTML = name;
                 document.getElementById("email").innerHTML = email;
                 document.getElementById("phone").innerHTML = number;
