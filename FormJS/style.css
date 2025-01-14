@@ -37,3 +37,23 @@
 .card{
     margin: 1%;
 }
+.login_box{
+    width: 30%;
+    height: 40%;
+    margin-left: 35%;
+    margin-top: 12%;;
+}
+.input-group{
+    margin-top: 10%;
+}
+.signup{
+    height: 70vh;
+    display: none;
+}
+.loginn{
+    height: 70vh;
+    display: block;
+}
+.main{
+    display: none;
+}

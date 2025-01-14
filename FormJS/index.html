@@ -9,11 +9,94 @@
     
 </head>
 <body>
-    
-    <div class="col-12 hidden">
+<script>
+    let usernameeee = null;
+</script>
+    <div class="signup col-12" id="signup">
+        
+        <div class="login_box">
+            <form onsubmit=signup(event) id="signupp">
+            <div class="input-group mb-3" style="margin-top:10%;">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" id="usernamee">
+            </div>
+            <div class="input-group mb-3" style="margin-top:10%;margin-bottom:20%;">
+                <span class="input-group-text" id="basic-addon1">P</span>
+                <input type="password" class="form-control" placeholder="password"  aria-describedby="basic-addon1" id="passwordd">
+            </div>
+            <div class="input-group mb-3" style="margin-top:10%;margin-bottom:20%;">
+                <span class="input-group-text" id="basic-addon1">CP</span>
+                <input type="password" class="form-control" placeholder="confirm password"  aria-describedby="basic-addon1" id="password_c">
+            </div>
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button class="btn btn-primary" type="submit">Signup</button>
+            </div>
+
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button class="btn btn-primary" type="button" onclick="lgin(event)">Login</button>
+            </div>
+            </form>
+        </div>
+        
+    </div>
+
+
+
+
+
+
+
+    <div class="loginn col-12" id="login">
+        
+        <div class="login_box">
+            <form onsubmit=showpage(event) id="login">
+            <div class="input-group mb-3" style="margin-top:10%;">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" id="username">
+            </div>
+            <div class="input-group mb-3" style="margin-top:10%;margin-bottom:20%;">
+                <span class="input-group-text" id="basic-addon1">P</span>
+                <input type="password" class="form-control" placeholder="password"  aria-describedby="basic-addon1" id="password">
+            </div>
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button class="btn btn-primary" type="submit">Login</button>
+            </div>
+            </form>
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button class="btn btn-primary" type="button" onclick="sgnup(event)">Signup</button>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="col-12 hidden main" id="main">
         <div class="row">
             <div class="col-3">
-                <script>document.write('<div class="card"><div class="card-body"><img src="https://cdn.pixabay.com/photo/2022/10/05/04/11/super-hero-7499630_1280.jpg" alt="" class = imggg><h5 class="card-title">Special title treatment</h5><p class="card-text">With supporting text below as a natural lead-in to additional content.</p><a href="#" class="btn btn-primary">Go somewhere</a></div></div>')</script>    
+                <script>
+                    let myArray = [];
+                    text = "i love my mom so much"
+                    myArray = text.split(" ");
+                    for(let i=0; i<localStorage.length; i++){
+                        let key =localStorage.key(i);
+                        console.log(localStorage.getItem(key));
+                        if(key.includes(usernameeee)){
+                            
+                            let valuer = localStorage.getItem(key);
+                            let value = String(valuer);
+                            myArray = value.split(" ");
+                           
+                        }
+                       
+
+                    
+                    document.write('<div class="card"><div class="card-body"><img src="'+myArray[5]+'" alt="" class = imggg><h5 class="card-title">'+myArray[0]+'</h5><p class="card-text">'+myArray[1]+'</p><br>'+myArray[2]+'<a href="#" class="btn btn-primary">Go somewhere</a></div></div>');
+                    }
+                </script>    
             </div>
 
 
@@ -166,19 +249,21 @@
             }
             else{
                 let data = name + " " + email + " " + number + " " + github + " " + linkedin + " " + img_link
-                console.log(data);
+                //console.log(data);
                 if(storage == "local")
                 {
-                    console.log(indx);
-                    console.log("local");
-                    localStorage.setItem(indx, data);
+                    key = usernameeee + "" +indx
+                    //console.log(key);
+                    //console.log("local");
+                    localStorage.setItem(key, data);
                     // localStorage.clear();
                 }
                 else if(storage == "session")
                 {
-                    console.log(indx);
+                    key = username + "" +indx
+                    console.log(key);
                     console.log("local");
-                    sessionStorage.setItem(indx, data);
+                    sessionStorage.setItem(key, data);
                     //sessionStorage.clear();
                 }
 
@@ -193,7 +278,51 @@
         function redirect_link(){
             window.open(linkk);
         }
-        
+        function signup(event){
+            event.preventDefault();
+            let username = document.forms["signupp"]["usernamee"].value;
+            let password = document.forms["signupp"]["passwordd"].value;
+            let password_c = document.forms["signupp"]["password_c"].value;
+            if(password!=password_c){
+                alert('password do not match');
+                return 0;
+            }
+            localStorage.setItem(username, password);
+            document.getElementById('signup').style.display='none';
+            document.getElementById('login').style.display='block';
+        }
+        function showpage(event){
+            event.preventDefault();
+            let username = document.forms["login"]["username"].value;
+            let password = document.forms["login"]["password"].value;
+            const storedPassword = localStorage.getItem(username);
+            if (storedPassword) {
+                // console.log("Hi");
+                // Check if the password matches
+                if (password === storedPassword) {
+                    //console.log(username);
+                    usernameeee = username;
+                    // console.log("Hello");
+                    document.getElementById('signup').style.display='none';
+                    document.getElementById('login').style.display='none';
+                    document.getElementById('main').style.display='block';
+                } else {
+                    alert("Wrong password");
+                }
+            } else {
+                alert("Username not found");
+            }
+        }
+        function sgnup(event){
+            event.preventDefault();
+            document.getElementById('login').style.display='none';
+            document.getElementById('signup').style.display='block';
+        }
+        function lgin(event){
+            event.preventDefault();
+            document.getElementById('signup').style.display='none';
+            document.getElementById('login').style.display='block';
+        }    
     </script>    
 </body>
 </html>
