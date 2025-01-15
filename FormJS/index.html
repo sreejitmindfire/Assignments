@@ -11,6 +11,27 @@
 <body>
 <script>
     let usernameeee = null;
+    window.onload = function() {
+            if (localStorage.getItem('loggedIn') === 'true') {
+                let login_man = localStorage.getItem('inside');
+                usernameeee = login_man.replace("6969","");
+                console.log(usernameeee);
+                show_the_page(event);
+            } else {
+                showLogin();
+            }
+        };
+        function showLogin() {
+            document.getElementById('login').style.display = 'block';
+            document.getElementById('signup').style.display = 'none';
+            document.getElementById('main').style.display = 'none';
+        }
+
+        function showMain() {
+            document.getElementById('login').style.display = 'none';
+            document.getElementById('signup').style.display = 'none';
+            document.getElementById('main').style.display = 'block';
+        }
 </script>
     <div class="signup col-12" id="signup">
         
@@ -76,27 +97,10 @@
 
     <div class="col-12 hidden main" id="main">
         <div class="row">
-            <div class="col-3">
-                <script>
-                    let myArray = [];
-                    text = "i love my mom so much"
-                    myArray = text.split(" ");
-                    for(let i=0; i<localStorage.length; i++){
-                        let key =localStorage.key(i);
-                        console.log(localStorage.getItem(key));
-                        if(key.includes(usernameeee)){
-                            
-                            let valuer = localStorage.getItem(key);
-                            let value = String(valuer);
-                            myArray = value.split(" ");
-                           
-                        }
-                       
+            <div class="col-3 overflow-auto">
+                <div id="input_given_by_user">
 
-                    
-                    document.write('<div class="card"><div class="card-body"><img src="'+myArray[5]+'" alt="" class = imggg><h5 class="card-title">'+myArray[0]+'</h5><p class="card-text">'+myArray[1]+'</p><br>'+myArray[2]+'<a href="#" class="btn btn-primary">Go somewhere</a></div></div>');
-                    }
-                </script>    
+                </div>
             </div>
 
 
@@ -138,8 +142,9 @@
                           Session Storage
                         </label>
                       </div>
-                    <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                    <button type="submit" class="btn btn-primary btn-lg" id="submit_button">Submit</button>
                 </form>
+                <button onclick="logout()" class="btn btn-primary btn-lg">Logout</button>
             </div>
         </div>
     </div>
@@ -248,23 +253,145 @@
                 return false;
             }
             else{
-                let data = name + " " + email + " " + number + " " + github + " " + linkedin + " " + img_link
+                let data = name + " " + email + " " + number + " " + github + " " + linkedin + " " + img_link + " " + storage;
                 //console.log(data);
                 if(storage == "local")
                 {
                     key = usernameeee + "" +indx
-                    //console.log(key);
-                    //console.log("local");
-                    localStorage.setItem(key, data);
-                    // localStorage.clear();
+
+                        console.log(key)
+                        console.log(data)
+                        localStorage.setItem(key, data);
+                   
+                        let user_div = document.createElement('div');
+                        user_div.classList.add('card');
+
+                        let user_div_body = document.createElement('div')
+                        user_div_body.classList.add('card-body')
+
+                        let user_div_body_header = document.createElement('h5');
+                        user_div_body_header.classList.add('card-title');
+                        user_div_body_header.textContent = name;
+
+                        let user_div_body_email = document.createElement('p');
+                        user_div_body_email.classList.add('card-text');
+                        user_div_body_email.textContent = email;
+
+                        let user_div_body_phone = document.createElement('p');
+                        user_div_body_phone.classList.add('card-text');
+                        user_div_body_phone.textContent = number;
+                        
+                        let user_div_github = document.createElement('button');
+                        user_div_github.classList.add('btn');
+                        user_div_github.classList.add('btn-primary');
+                        user_div_github.textContent = "Github";
+                        user_div_github.addEventListener("click",function(){window.open(github)});
+
+                        let user_div_linkedin = document.createElement('button');
+                        user_div_linkedin.classList.add('btn');
+                        user_div_linkedin.classList.add('btn-primary');
+                        user_div_linkedin.textContent = "Linkedin";
+                        user_div_linkedin.addEventListener("click",function(){window.open(linkedin)});
+                        
+                        let user_div_image = document.createElement('img');
+                        user_div_image.classList.add('imggg');
+                        user_div_image.src = img_link;
+
+                        user_div_edit_button = document.createElement('button');
+                        user_div_edit_button.classList.add('btn');
+                        user_div_edit_button.classList.add('btn-primary');
+                        user_div_edit_button.textContent = "edit";
+                        user_div_edit_button.addEventListener("click",function(){edit(event,data)});
+
+                        let user_div_delete_button = document.createElement('button');
+                        user_div_delete_button.classList.add('btn');
+                        user_div_delete_button.classList.add('btn-primary');
+                        user_div_delete_button.textContent = "delete";
+                        user_div_delete_button.addEventListener("click",function(){del(event,key,data)});
+
+                        let line_brk = document.createElement('br');
+
+                        user_div_body.appendChild(user_div_image);
+                        user_div_body.appendChild(user_div_body_header);
+                        user_div_body.appendChild(user_div_body_email);
+                        user_div_body.appendChild(user_div_body_phone);
+                        user_div_body.appendChild(user_div_github);
+                        user_div_body.appendChild(user_div_linkedin);
+                        user_div_body.appendChild(line_brk);
+                        user_div_body.appendChild(user_div_edit_button);
+                        user_div_body.appendChild(user_div_delete_button);
+
+                        user_div.appendChild(user_div_body);
+                        document.getElementById('input_given_by_user').appendChild(user_div);
+
                 }
                 else if(storage == "session")
                 {
-                    key = username + "" +indx
-                    console.log(key);
-                    console.log("local");
+                    key = usernameeee + "" +indx
+                    // console.log(key);
+                    // console.log("local");
                     sessionStorage.setItem(key, data);
-                    //sessionStorage.clear();
+                    // sessionStorage.clear();
+                        let user_div = document.createElement('div');
+                        user_div.classList.add('card');
+
+                        let user_div_body = document.createElement('div')
+                        user_div_body.classList.add('card-body')
+
+                        let user_div_body_header = document.createElement('h5');
+                        user_div_body_header.classList.add('card-title');
+                        user_div_body_header.textContent = name;
+
+                        let user_div_body_email = document.createElement('p');
+                        user_div_body_email.classList.add('card-text');
+                        user_div_body_email.textContent = email;
+
+                        let user_div_body_phone = document.createElement('p');
+                        user_div_body_phone.classList.add('card-text');
+                        user_div_body_phone.textContent = number;
+                        
+                        let user_div_github = document.createElement('button');
+                        user_div_github.classList.add('btn');
+                        user_div_github.classList.add('btn-primary');
+                        user_div_github.textContent = "Github";
+                        user_div_github.addEventListener("click",function(){window.open(github)});
+
+                        let user_div_linkedin = document.createElement('button');
+                        user_div_linkedin.classList.add('btn');
+                        user_div_linkedin.classList.add('btn-primary');
+                        user_div_linkedin.textContent = "Linkedin";
+                        user_div_linkedin.addEventListener("click",function(){window.open(linkedin)});
+                        
+                        let user_div_image = document.createElement('img');
+                        user_div_image.classList.add('imggg');
+                        user_div_image.src = img_link;
+
+                        user_div_edit_button = document.createElement('button');
+                        user_div_edit_button.classList.add('btn');
+                        user_div_edit_button.classList.add('btn-primary');
+                        user_div_edit_button.textContent = "edit";
+                        user_div_edit_button.addEventListener("click",function(){edit(event,data)});
+
+                        let user_div_delete_button = document.createElement('button');
+                        user_div_delete_button.classList.add('btn');
+                        user_div_delete_button.classList.add('btn-primary');
+                        user_div_delete_button.textContent = "delete";
+                        user_div_delete_button.addEventListener("click",function(){del(event,key,data)});
+
+                        let line_brk = document.createElement('br');
+
+                        user_div_body.appendChild(user_div_image);
+                        user_div_body.appendChild(user_div_body_header);
+                        user_div_body.appendChild(user_div_body_email);
+                        user_div_body.appendChild(user_div_body_phone);
+                        user_div_body.appendChild(user_div_github);
+                        user_div_body.appendChild(user_div_linkedin);
+                        user_div_body.appendChild(line_brk);
+                        user_div_body.appendChild(user_div_edit_button);
+                        user_div_body.appendChild(user_div_delete_button);
+
+                        user_div.appendChild(user_div_body);
+                        document.getElementById('input_given_by_user').appendChild(user_div);
                 }
 
             }
@@ -293,7 +420,9 @@
         }
         function showpage(event){
             event.preventDefault();
+            
             let username = document.forms["login"]["username"].value;
+            usernameeee = username;
             let password = document.forms["login"]["password"].value;
             const storedPassword = localStorage.getItem(username);
             if (storedPassword) {
@@ -301,7 +430,169 @@
                 // Check if the password matches
                 if (password === storedPassword) {
                     //console.log(username);
-                    usernameeee = username;
+                    //loged in
+                    // localStorage.clear();
+                    localStorage.setItem('loggedIn', 'true');
+                    user_key = username + "6969";
+                    localStorage.setItem('inside', user_key);
+                    let myArray = [];
+                    for(let i=0; i<localStorage.length; i++){
+                        let key =localStorage.key(i);
+                        // console.log(localStorage.getItem(key));
+                        // console.log(key+"hero");
+                        // console.log(username);
+                        if(key.includes(username) && key !== username){
+                            let valuer = localStorage.getItem(key);
+                            let value = String(valuer);
+                            myArray = value.split(" ");
+                            // console.log(myArray);
+                        
+                        let user_div = document.createElement('div');
+                        user_div.classList.add('card');
+
+                        let user_div_body = document.createElement('div')
+                        user_div_body.classList.add('card-body')
+
+                        let user_div_body_header = document.createElement('h5');
+                        user_div_body_header.classList.add('card-title');
+                        user_div_body_header.textContent = myArray[0];
+
+                        let user_div_body_email = document.createElement('p');
+                        user_div_body_email.classList.add('card-text');
+                        user_div_body_email.textContent = myArray[1];
+
+                        let user_div_body_phone = document.createElement('p');
+                        user_div_body_phone.classList.add('card-text');
+                        user_div_body_phone.textContent = myArray[2];
+                        
+                        let user_div_github = document.createElement('button');
+                        user_div_github.classList.add('btn');
+                        user_div_github.classList.add('btn-primary');
+                        user_div_github.textContent = "Github";
+                        user_div_github.addEventListener("click",function(){window.open(myArray[3])});
+
+                        let user_div_linkedin = document.createElement('button');
+                        user_div_linkedin.classList.add('btn');
+                        user_div_linkedin.classList.add('btn-primary');
+                        user_div_linkedin.textContent = "Linkedin";
+                        user_div_linkedin.addEventListener("click",function(){window.open(myArray[4])});
+                        
+                        let user_div_image = document.createElement('img');
+                        user_div_image.classList.add('imggg');
+                        user_div_image.src = myArray[5];
+                        
+                        let user_div_edit_button = document.createElement('button');
+                        user_div_edit_button.classList.add('btn');
+                        user_div_edit_button.classList.add('btn-primary');
+                        user_div_edit_button.textContent = "edit";
+                        user_div_edit_button.addEventListener("click",function(){edit(event,value)});
+
+                        let user_div_delete_button = document.createElement('button');
+                        user_div_delete_button.classList.add('btn');
+                        user_div_delete_button.classList.add('btn-primary');
+                        user_div_delete_button.textContent = "delete";
+                        user_div_delete_button.addEventListener("click",function(){del(event,key,value)});
+
+                        let line_brk = document.createElement('br');
+
+                        user_div_body.appendChild(user_div_image);
+                        user_div_body.appendChild(user_div_body_header);
+                        user_div_body.appendChild(user_div_body_email);
+                        user_div_body.appendChild(user_div_body_phone);
+                        user_div_body.appendChild(user_div_github);
+                        user_div_body.appendChild(user_div_linkedin);
+                        user_div_body.appendChild(line_brk);
+                        user_div_body.appendChild(user_div_edit_button);
+                        user_div_body.appendChild(user_div_delete_button);
+
+                        user_div.appendChild(user_div_body);
+                        document.getElementById('input_given_by_user').appendChild(user_div);
+
+                        }
+
+                           
+                    }
+
+                    for(let i=0; i<sessionStorage.length; i++){
+                        let key = sessionStorage.key(i);
+                        // console.log(localStorage.getItem(key));
+                        // console.log(key);
+                        // console.log(username);
+                        if(key!= null){
+                            if(key.includes(username) && key !== username){
+                            let valuer = localStorage.getItem(key);
+                            let value = String(valuer);
+                            myArray = value.split(" ");
+                            // console.log(myArray);
+                        
+                        let user_div = document.createElement('div');
+                        user_div.classList.add('card');
+
+                        let user_div_body = document.createElement('div')
+                        user_div_body.classList.add('card-body')
+
+                        let user_div_body_header = document.createElement('h5');
+                        user_div_body_header.classList.add('card-title');
+                        user_div_body_header.textContent = myArray[0];
+
+                        let user_div_body_email = document.createElement('p');
+                        user_div_body_email.classList.add('card-text');
+                        user_div_body_email.textContent = myArray[1];
+
+                        let user_div_body_phone = document.createElement('p');
+                        user_div_body_phone.classList.add('card-text');
+                        user_div_body_phone.textContent = myArray[2];
+                        
+                        let user_div_github = document.createElement('button');
+                        user_div_github.classList.add('btn');
+                        user_div_github.classList.add('btn-primary');
+                        user_div_github.textContent = "Github";
+                        user_div_github.addEventListener("click",function(){window.open(myArray[3])});
+
+                        let user_div_linkedin = document.createElement('button');
+                        user_div_linkedin.classList.add('btn');
+                        user_div_linkedin.classList.add('btn-primary');
+                        user_div_linkedin.textContent = "Linkedin";
+                        user_div_linkedin.addEventListener("click",function(){window.open(myArray[4])});
+                        
+                        let user_div_image = document.createElement('img');
+                        user_div_image.classList.add('imggg');
+                        user_div_image.src = myArray[5];
+
+                        user_div_edit_button = document.createElement('button');
+                        user_div_edit_button.classList.add('btn');
+                        user_div_edit_button.classList.add('btn-primary');
+                        user_div_edit_button.textContent = "edit";
+                        user_div_edit_button.addEventListener("click",function(){edit(event,value)});
+
+                        let user_div_delete_button = document.createElement('button');
+                        user_div_delete_button.classList.add('btn');
+                        user_div_delete_button.classList.add('btn-primary');
+                        user_div_delete_button.textContent = "delete";
+                        user_div_delete_button.addEventListener("click",function(){del(event,key,value)});
+
+                        let line_brk = document.createElement('br');
+
+                        user_div_body.appendChild(user_div_image);
+                        user_div_body.appendChild(user_div_body_header);
+                        user_div_body.appendChild(user_div_body_email);
+                        user_div_body.appendChild(user_div_body_phone);
+                        user_div_body.appendChild(user_div_github);
+                        user_div_body.appendChild(user_div_linkedin);
+                        user_div_body.appendChild(line_brk);
+                        user_div_body.appendChild(user_div_edit_button);
+                        user_div_body.appendChild(user_div_delete_button);
+
+                        user_div.appendChild(user_div_body);
+                        document.getElementById('input_given_by_user').appendChild(user_div);
+
+                        }
+                        
+                        }
+
+                           
+                    }
+
                     // console.log("Hello");
                     document.getElementById('signup').style.display='none';
                     document.getElementById('login').style.display='none';
@@ -312,6 +603,7 @@
             } else {
                 alert("Username not found");
             }
+            
         }
         function sgnup(event){
             event.preventDefault();
@@ -322,7 +614,209 @@
             event.preventDefault();
             document.getElementById('signup').style.display='none';
             document.getElementById('login').style.display='block';
-        }    
+        }
+        function edit(event, value){
+            let elementss =[];
+            elementss = value.split(" ");
+            document.getElementById("Name").value = elementss[0];
+            document.getElementById("Email").value = elementss[1];
+            document.getElementById("Phno").value = elementss[2];
+            document.getElementById("Github").value = elementss[3];
+            document.getElementById("Linkedin").value = elementss[4];
+            document.getElementById("Image").value = elementss[5];
+            document.getElementById("submit_button").innerText = "Edit";
+
+            console.log(elementss[6]);
+
+            if(elementss[6]=='local'){
+                document.getElementById('local').click();
+            }
+            else{
+                document.getElementById('session').click();
+            }   
+        }
+        function del(event,key,value){
+            let elementss =[];
+            elementss = value.split(" ");
+            if(elementss[6]=='local'){
+                localStorage.removeItem(key);
+                location.reload(true);
+            }
+            else{
+                sessionStorage.removeItem(key);
+                location.reload(true);
+            }
+
+        }   
+        function logout() {
+            localStorage.removeItem('loggedIn');
+            showLogin();
+        }
+        function show_the_page(event){
+            event.preventDefault();
+            let myArray = [];
+                    for(let i=0; i<localStorage.length; i++){
+                        let key =localStorage.key(i);
+                        // console.log(localStorage.getItem(key));
+                        // console.log(key+"hero");
+                        // console.log(username);
+                        if(key.includes(usernameeee) && key !== usernameeee){
+                            let valuer = localStorage.getItem(key);
+                            let value = String(valuer);
+                            myArray = value.split(" ");
+                            // console.log(myArray);
+                        
+                        let user_div = document.createElement('div');
+                        user_div.classList.add('card');
+
+                        let user_div_body = document.createElement('div')
+                        user_div_body.classList.add('card-body')
+
+                        let user_div_body_header = document.createElement('h5');
+                        user_div_body_header.classList.add('card-title');
+                        user_div_body_header.textContent = myArray[0];
+
+                        let user_div_body_email = document.createElement('p');
+                        user_div_body_email.classList.add('card-text');
+                        user_div_body_email.textContent = myArray[1];
+
+                        let user_div_body_phone = document.createElement('p');
+                        user_div_body_phone.classList.add('card-text');
+                        user_div_body_phone.textContent = myArray[2];
+                        
+                        let user_div_github = document.createElement('button');
+                        user_div_github.classList.add('btn');
+                        user_div_github.classList.add('btn-primary');
+                        user_div_github.textContent = "Github";
+                        user_div_github.addEventListener("click",function(){window.open(myArray[3])});
+
+                        let user_div_linkedin = document.createElement('button');
+                        user_div_linkedin.classList.add('btn');
+                        user_div_linkedin.classList.add('btn-primary');
+                        user_div_linkedin.textContent = "Linkedin";
+                        user_div_linkedin.addEventListener("click",function(){window.open(myArray[4])});
+                        
+                        let user_div_image = document.createElement('img');
+                        user_div_image.classList.add('imggg');
+                        user_div_image.src = myArray[5];
+                        
+                        let user_div_edit_button = document.createElement('button');
+                        user_div_edit_button.classList.add('btn');
+                        user_div_edit_button.classList.add('btn-primary');
+                        user_div_edit_button.textContent = "edit";
+                        user_div_edit_button.addEventListener("click",function(){edit(event,value)});
+
+                        let user_div_delete_button = document.createElement('button');
+                        user_div_delete_button.classList.add('btn');
+                        user_div_delete_button.classList.add('btn-primary');
+                        user_div_delete_button.textContent = "delete";
+                        user_div_delete_button.addEventListener("click",function(){del(event,key,value)});
+
+                        let line_brk = document.createElement('br');
+
+                        user_div_body.appendChild(user_div_image);
+                        user_div_body.appendChild(user_div_body_header);
+                        user_div_body.appendChild(user_div_body_email);
+                        user_div_body.appendChild(user_div_body_phone);
+                        user_div_body.appendChild(user_div_github);
+                        user_div_body.appendChild(user_div_linkedin);
+                        user_div_body.appendChild(line_brk);
+                        user_div_body.appendChild(user_div_edit_button);
+                        user_div_body.appendChild(user_div_delete_button);
+
+                        user_div.appendChild(user_div_body);
+                        document.getElementById('input_given_by_user').appendChild(user_div);
+
+                        }
+
+                           
+                    }
+
+                    for(let i=0; i<sessionStorage.length; i++){
+                        let key = sessionStorage.key(i);
+                        // console.log(localStorage.getItem(key));
+                        // console.log(key);
+                        // console.log(username);
+                        if(key!= null){
+                            if(key.includes(usernameeee) && key !== usernameeee){
+                            let valuer = localStorage.getItem(key);
+                            let value = String(valuer);
+                            myArray = value.split(" ");
+                            // console.log(myArray);
+                        
+                        let user_div = document.createElement('div');
+                        user_div.classList.add('card');
+
+                        let user_div_body = document.createElement('div')
+                        user_div_body.classList.add('card-body')
+
+                        let user_div_body_header = document.createElement('h5');
+                        user_div_body_header.classList.add('card-title');
+                        user_div_body_header.textContent = myArray[0];
+
+                        let user_div_body_email = document.createElement('p');
+                        user_div_body_email.classList.add('card-text');
+                        user_div_body_email.textContent = myArray[1];
+
+                        let user_div_body_phone = document.createElement('p');
+                        user_div_body_phone.classList.add('card-text');
+                        user_div_body_phone.textContent = myArray[2];
+                        
+                        let user_div_github = document.createElement('button');
+                        user_div_github.classList.add('btn');
+                        user_div_github.classList.add('btn-primary');
+                        user_div_github.textContent = "Github";
+                        user_div_github.addEventListener("click",function(){window.open(myArray[3])});
+
+                        let user_div_linkedin = document.createElement('button');
+                        user_div_linkedin.classList.add('btn');
+                        user_div_linkedin.classList.add('btn-primary');
+                        user_div_linkedin.textContent = "Linkedin";
+                        user_div_linkedin.addEventListener("click",function(){window.open(myArray[4])});
+                        
+                        let user_div_image = document.createElement('img');
+                        user_div_image.classList.add('imggg');
+                        user_div_image.src = myArray[5];
+
+                        user_div_edit_button = document.createElement('button');
+                        user_div_edit_button.classList.add('btn');
+                        user_div_edit_button.classList.add('btn-primary');
+                        user_div_edit_button.textContent = "edit";
+                        user_div_edit_button.addEventListener("click",function(){edit(event,value)});
+
+                        let user_div_delete_button = document.createElement('button');
+                        user_div_delete_button.classList.add('btn');
+                        user_div_delete_button.classList.add('btn-primary');
+                        user_div_delete_button.textContent = "delete";
+                        user_div_delete_button.addEventListener("click",function(){del(event,key,value)});
+
+                        let line_brk = document.createElement('br');
+
+                        user_div_body.appendChild(user_div_image);
+                        user_div_body.appendChild(user_div_body_header);
+                        user_div_body.appendChild(user_div_body_email);
+                        user_div_body.appendChild(user_div_body_phone);
+                        user_div_body.appendChild(user_div_github);
+                        user_div_body.appendChild(user_div_linkedin);
+                        user_div_body.appendChild(line_brk);
+                        user_div_body.appendChild(user_div_edit_button);
+                        user_div_body.appendChild(user_div_delete_button);
+
+                        user_div.appendChild(user_div_body);
+                        document.getElementById('input_given_by_user').appendChild(user_div);
+
+                        }
+                        
+                        }
+
+                           
+                    }
+
+                    // console.log("Hello");
+                    document.getElementById('signup').style.display='none';
+                    document.getElementById('login').style.display='none';
+                    document.getElementById('main').style.display='block';
+        } 
     </script>    
 </body>
 </html>

@@ -2,7 +2,7 @@
     background-color: aqua;
     margin: 0%;
     height: 100vh;
-    padding: 1%;
+    padding: 2%;
 }
 .col-9{
     
@@ -30,6 +30,7 @@
 }
 .btn{
     margin-bottom: 5%;
+    margin-right: 5%;
 }
 .form-check{
     margin-bottom: 2%;
@@ -56,4 +57,11 @@
 }
 .main{
     display: none;
+}
+#input_given_by_user{
+    display: flexbox;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 80%;
+    height:auto;
 }
