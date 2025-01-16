@@ -104,31 +104,37 @@
             </div>
 
 
-            <div class="col-9">
+            <div class="col-9 overflow-auto">
                 <form id="myform" onsubmit="validateForm(event)">
                     <div class="mb-3">
                         <label for="Name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="Name" placeholder="Name">
+                        <input type="text" class="form-control" id="Name" placeholder="Name" onchange="v_name()">
+                        <p id="invalid_name" style="color: red;" class="hidden_paragraph">The Name is invalid</p>
                     </div>
                     <div class="mb-3">
                         <label for="Email" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="Email" placeholder="name@example.com">
+                        <input type="email" class="form-control" id="Email" placeholder="name@example.com" onchange="v_email()">
+                        <p id="invalid_email" style="color: red;" class="hidden_paragraph">The Email is invalid</p>
                     </div>
                     <div class="mb-3">
                         <label for="Phno" class="form-label">Phone</label>
-                        <input type="number" class="form-control" id="Phno" placeholder="xxxxxxxxxx" min="2002000000" max="9999999999">
+                        <input type="number" class="form-control" id="Phno" placeholder="xxxxxxxxxx" min="2002000000" max="9999999999" onchange="v_number()">
+                        <p id="invalid_number" style="color: red;" class="hidden_paragraph" >The Number is invalid</p>
                     </div>
                     <div class="mb-3">
                         <label for="Github" class="form-label">Github</label>
-                        <input type="url" class="form-control" id="Github" placeholder="github.com/username">
+                        <input type="url" class="form-control" id="Github" placeholder="github.com/username" onchange="v_git()">
+                        <p id="invalid_git" style="color: red;" class="hidden_paragraph">The Github Profile Link is invalid</p>
                     </div>
                     <div class="mb-3">
                         <label for="Linkedin" class="form-label">Linkedin</label>
-                        <input type="url" class="form-control" id="Linkedin" placeholder="linkedin.com/in/username">
+                        <input type="url" class="form-control" id="Linkedin" placeholder="linkedin.com/in/username" onchange="v_link()">
+                        <p id="invalid_link" style="color: red;" class="hidden_paragraph">The Linkedin Profile Link is invalid</p>
                     </div>
                     <div class="mb-3">
                         <label for="Image" class="form-label">Image URL</label>
-                        <input type="url" class="form-control" id="Image" placeholder="Image URL">
+                        <input type="url" class="form-control" id="Image" placeholder="Image URL" onchange="v_image()">
+                        <p id="invalid_img" style="color: red;" class="hidden_paragraph">The Image link is invalid</p>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="Rad" id="local" value="local"> 
@@ -163,40 +169,7 @@
         function update_Link(linkedin){
             linkk = linkedin;
         }
-        function vlink(linkedin){
-            text = linkedin;
-            let indexa = text.indexOf("https://linkedin.com");
-            let indexb = text.indexOf("https://www.linkedin.com");
-            if(indexa == 0 || indexb == 0){
-                return false;
-            }
-            else{
-                return true;
-            }
-        }
-        function vgit(github){
-            text = github;
-            let indexa = text.indexOf("https://github.com");
-            let indexb = text.indexOf("https://github.com");
-            if(indexa == 0 || indexb == 0){
-                return false;
-            }
-            else{
-                return true;
-            }
-
-        }
-        function vimage(image_link){
-            text = image_link;
-            let indexa = text.indexOf("https://");
-            if(indexa == 0){
-                return false;
-            }
-            else{
-                return true;
-            }
-
-        }
+        
         
         function vemail(email){
             text = email;
@@ -227,9 +200,9 @@
                     break;
                 }
             }
-            
-            if (name == "") {
-                alert("Name must be filled out");
+            const isValid = /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(name);
+            if (name == "" || isValid == false) {
+                alert("Invalid name");
                 return false;
             }
             else if(vemail(email)){
@@ -301,7 +274,7 @@
                         user_div_edit_button.classList.add('btn');
                         user_div_edit_button.classList.add('btn-primary');
                         user_div_edit_button.textContent = "edit";
-                        user_div_edit_button.addEventListener("click",function(){edit(event,data)});
+                        user_div_edit_button.addEventListener("click",function(){edit(event,key,data)});
 
                         let user_div_delete_button = document.createElement('button');
                         user_div_delete_button.classList.add('btn');
@@ -370,7 +343,7 @@
                         user_div_edit_button.classList.add('btn');
                         user_div_edit_button.classList.add('btn-primary');
                         user_div_edit_button.textContent = "edit";
-                        user_div_edit_button.addEventListener("click",function(){edit(event,data)});
+                        user_div_edit_button.addEventListener("click",function(){edit(event,key,data)});
 
                         let user_div_delete_button = document.createElement('button');
                         user_div_delete_button.classList.add('btn');
@@ -485,7 +458,7 @@
                         user_div_edit_button.classList.add('btn');
                         user_div_edit_button.classList.add('btn-primary');
                         user_div_edit_button.textContent = "edit";
-                        user_div_edit_button.addEventListener("click",function(){edit(event,value)});
+                        user_div_edit_button.addEventListener("click",function(){edit(event,key,value)});
 
                         let user_div_delete_button = document.createElement('button');
                         user_div_delete_button.classList.add('btn');
@@ -563,7 +536,7 @@
                         user_div_edit_button.classList.add('btn');
                         user_div_edit_button.classList.add('btn-primary');
                         user_div_edit_button.textContent = "edit";
-                        user_div_edit_button.addEventListener("click",function(){edit(event,value)});
+                        user_div_edit_button.addEventListener("click",function(){edit(event,key,value)});
 
                         let user_div_delete_button = document.createElement('button');
                         user_div_delete_button.classList.add('btn');
@@ -615,7 +588,7 @@
             document.getElementById('signup').style.display='none';
             document.getElementById('login').style.display='block';
         }
-        function edit(event, value){
+        function edit(event,key,value){
             let elementss =[];
             elementss = value.split(" ");
             document.getElementById("Name").value = elementss[0];
@@ -624,7 +597,20 @@
             document.getElementById("Github").value = elementss[3];
             document.getElementById("Linkedin").value = elementss[4];
             document.getElementById("Image").value = elementss[5];
+            key_input = document.createElement("input");
+            key_input.type = 'hidden';
+            key_input.id = 'key'
+            key_input.value = key;
+            document.getElementById("myform").appendChild(key_input);
+
             document.getElementById("submit_button").innerText = "Edit";
+            let form = document.getElementById("myform");
+            form.onsubmit = function(event) {
+                event.preventDefault(); 
+                console.log("New dynamic function executed!");
+                edit_data(event,key,value);
+
+            }
 
             console.log(elementss[6]);
 
@@ -634,6 +620,75 @@
             else{
                 document.getElementById('session').click();
             }   
+        }
+        function edit_data(event,key,value) {
+            event.preventDefault();
+
+            event.preventDefault();
+            let name = document.forms["myform"]["Name"].value;
+            let email = document.forms["myform"]["Email"].value;
+            let number = document.forms["myform"]["Phno"].value;
+            let github = document.forms["myform"]["Github"].value;
+            let linkedin = document.forms["myform"]["Linkedin"].value;
+            let img_link = document.forms["myform"]["Image"].value;
+            let keyy = document.forms["myform"]["key"].value;
+            let storages = document.getElementsByName('Rad');
+            let storage = null;
+            for (const radio of storages){
+                if(radio.checked){
+                    storage = radio.value;
+                    break;
+                }
+            }
+            
+
+            if (name == "") {
+                alert("Name must be filled out");
+                return false;
+            }
+            else if(vemail(email)){
+                alert("email should be valid");
+                return false;
+            }
+            else if(number==""){
+                alert("Phone number should be valid");
+                return false;
+            }
+            else if(vgit(github)){
+                alert("github should be valid");
+                return false;
+            }
+            else if(vlink(linkedin)){
+                alert("linkedin should be valid");
+                return false;
+            }
+            else if(vimage(img_link)){
+                alert("image link should be valid");
+                return false;
+            }
+            else{
+                //delete local data
+                localStorage.removeItem(keyy);
+                //delete session data
+                sessionStorage.removeItem(keyy);
+                let data = name + " " + email + " " + number + " " + github + " " + linkedin + " " + img_link + " " + storage;
+                //console.log(data);
+                if(storage == "local")
+                {
+                        // console.log(keyy)
+                        // console.log(data)
+                        localStorage.setItem(keyy, data);
+                   
+                }
+                else if(storage == "session")
+                {
+                    // console.log(key);
+                    // console.log("local");
+                    sessionStorage.setItem(keyy, data);
+                    // sessionStorage.clear();
+                }
+                location.reload(true);
+            }           
         }
         function del(event,key,value){
             let elementss =[];
@@ -704,7 +759,7 @@
                         user_div_edit_button.classList.add('btn');
                         user_div_edit_button.classList.add('btn-primary');
                         user_div_edit_button.textContent = "edit";
-                        user_div_edit_button.addEventListener("click",function(){edit(event,value)});
+                        user_div_edit_button.addEventListener("click",function(){edit(event,key,value)});
 
                         let user_div_delete_button = document.createElement('button');
                         user_div_delete_button.classList.add('btn');
@@ -782,7 +837,7 @@
                         user_div_edit_button.classList.add('btn');
                         user_div_edit_button.classList.add('btn-primary');
                         user_div_edit_button.textContent = "edit";
-                        user_div_edit_button.addEventListener("click",function(){edit(event,value)});
+                        user_div_edit_button.addEventListener("click",function(){edit(event,key,value)});
 
                         let user_div_delete_button = document.createElement('button');
                         user_div_delete_button.classList.add('btn');
@@ -816,7 +871,143 @@
                     document.getElementById('signup').style.display='none';
                     document.getElementById('login').style.display='none';
                     document.getElementById('main').style.display='block';
-        } 
+        }
+
+        function vlink(linkedin){
+            text = linkedin;
+            let indexa = text.indexOf("https://linkedin.com");
+            let indexb = text.indexOf("https://www.linkedin.com");
+            if(indexa == 0 || indexb == 0){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+        function vgit(github){
+            text = github;
+            let indexa = text.indexOf("https://github.com");
+            let indexb = text.indexOf("https://github.com");
+            if(indexa == 0 || indexb == 0){
+                return false;
+            }
+            else{
+                return true;
+            }
+
+        }
+        function vimage(image_link){
+            text = image_link;
+            let indexa = text.indexOf("https://");
+            if(indexa == 0){
+                return false;
+            }
+            else{
+                return true;
+            }
+
+        }
+
+
+
+
+
+
+
+
+        function v_name(){
+            name = document.getElementById("Name");
+            name_text =document.getElementById("Name").value;
+            // console.log("i am here");
+            const isValid = /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(name_text);
+            console.log(name_text);
+            console.log(isValid);
+            if (name_text == "" || isValid == false) {
+                console.log("i am here");
+                document.getElementById("Name").classList.add("invalid");
+                document.getElementById("invalid_name").style.display = 'block';
+            }
+            else{
+                document.getElementById("Name").classList.remove("invalid");
+                document.getElementById("invalid_name").style.display = 'none';
+            }
+        }
+        
+        function v_email(){
+            email = document.getElementById("Email");
+            text = email.value;
+            console.log(text);
+            // console.log("i am here");
+            let indexa = text.indexOf("@");
+            let indexdot = text.indexOf(".");
+
+            if((indexa <= 0)||(indexdot < indexa)){
+                document.getElementById("Email").classList.add("invalid");
+                document.getElementById("invalid_email").style.display = 'block';
+            }
+            else{
+                document.getElementById("Email").classList.remove("invalid");
+                document.getElementById("invalid_email").style.display = 'none';
+            }
+        }
+        function v_number(){
+            number = document.getElementById("Phno");
+            text = document.getElementById("Phno").value;
+            console.log(text);
+            num_int = parseInt(text)
+
+            if((num_int>9999999999)||(num_int<2002000000)){
+                document.getElementById("Phno").classList.add("invalid");
+                document.getElementById("invalid_number").style.display = 'block';
+            }
+            else{
+                document.getElementById("Phno").classList.remove("invalid");
+                document.getElementById("invalid_number").style.display = 'none';
+            }
+        }
+        function v_link(){
+            text = document.getElementById("Linkedin").value;
+            let indexa = text.indexOf("https://linkedin.com");
+            let indexb = text.indexOf("https://www.linkedin.com");
+            if(indexa != 0 && indexb != 0){
+                document.getElementById("Linkedin").classList.add("invalid");
+                document.getElementById("invalid_link").style.display = 'block';
+            }
+            else{
+                document.getElementById("Linkedin").classList.remove("invalid");
+                document.getElementById("invalid_link").style.display = 'none';
+            }
+        }
+        function v_git(){
+            email = document.getElementById("Github");
+            text = document.getElementById("Github").value;
+            let indexa = text.indexOf("https://github.com");
+            let indexb = text.indexOf("https://www.github.com");
+            console.log(indexa);
+            if(indexa == 0 || indexb == 0){
+                document.getElementById("Github").classList.remove("invalid");
+                document.getElementById("invalid_git").style.display = 'none';
+            }
+            else{
+                document.getElementById("Github").classList.add("invalid");
+                document.getElementById("invalid_git").style.display = 'block';
+            }
+
+        }
+        function v_image(){
+            text = document.getElementById("Image").value;
+            console.log(text);
+            let indexa = text.indexOf("https://");
+            if(indexa == 0){
+                document.getElementById("Image").classList.remove("invalid");
+                document.getElementById("invalid_img").style.display = 'none';
+            }
+            else{
+                document.getElementById("Image").classList.add("invalid");
+                document.getElementById("invalid_img").style.display = 'block';
+            }
+
+        }  
     </script>    
 </body>
 </html>

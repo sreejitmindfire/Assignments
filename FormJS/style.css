@@ -65,3 +65,10 @@
     width: 80%;
     height:auto;
 }
+.invalid {
+    border-color: red;
+    color: red;
+}
+.hidden_paragraph{
+    display: none;
+}
