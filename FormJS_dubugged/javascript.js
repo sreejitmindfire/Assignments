@@ -206,7 +206,7 @@ function signup(event) {
                 }
             }
         
-            localStorage.setItem(key, JSON.stringify({ Username: username, Password: password }));
+            localStorage.setItem(key, JSON.stringify({ "Username": username, "Password": password }));
             showlogin();
         }
     }
@@ -219,11 +219,11 @@ function login_process(event) {
     event.preventDefault();
     let username = document.forms['login']['username'].value;
     let password = document.forms['login']['password'].value;
-
+    let found_username = 0
     for (let i = 0; i < localStorage.length; i++) {
         let lsKey = localStorage.key(i);
         let storedValue = JSON.parse(localStorage.getItem(lsKey));
-        let found_username = 0
+        
         if (storedValue && 'Username' in storedValue) {
             if (username === storedValue.Username) {
                 if (password === storedValue.Password) {
@@ -306,13 +306,13 @@ function varify_and_input() {
     //data entry in local storage
     else {
         let data = {
-            Name: name,
-            Email: email,
-            Number: number,
-            Github: github,
-            Linkedin: linkedin,
-            Img_Link: img_link,
-            Storage: storage
+            "Name": name,
+            "Email": email,
+            "Number": number,
+            "Github": github,
+            "Linkedin": linkedin,
+            "Img_Link": img_link,
+            "Storage": storage
         };
 
         if (storage === 'local') {
@@ -427,12 +427,16 @@ function showdata(event) {
                 user_div.appendChild(user_div_body);
                 document.getElementById('input_given_by_user').appendChild(user_div);
 
-            break;
+            
         }
     }
 
     for (let i = 0; i < sessionStorage.length; i++) {
         let ssKey = sessionStorage.key(i);
+        if (ssKey == "Username" || ssKey == "Loggedin" || ssKey == "IsThisFirstTime_Log_From_LiveServer") {
+            continue;
+        }
+        console.log(ssKey);
         let storedValue = JSON.parse(sessionStorage.getItem(ssKey));
 
         if (storedValue && 'Github' in storedValue) {
@@ -516,9 +520,9 @@ function showdata(event) {
 
 //logout
 function logout() {
-    sessionStorage.removeItem('loggedin');
+    sessionStorage.removeItem('Loggedin');
     sessionStorage.removeItem('Username');
-    showLogin();
+    showlogin();
 }
 //logout
 
@@ -601,15 +605,15 @@ function edit_submit(event, key) {
     let key_form = document.forms["myform"]["key"].value;
 
     let data = {
-        Name: name,
-        Email: email,
-        Number: number,
-        Github: github,
-        Linkedin: linkedin,
-        Img_Link: img_link,
-        Storage: storage,
-        Key: key_form,
-        Old_Storage: old_storage
+        "Name": name,
+        "Email": email,
+        "Number": number,
+        "Github": github,
+        "Linkedin": linkedin,
+        "Img_Link": img_link,
+        "Storage": storage,
+        "Key": key_form,
+        "Old_Storage": old_storage
     };
 
     // Remove old entry
