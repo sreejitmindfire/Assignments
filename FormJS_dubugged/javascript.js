@@ -109,10 +109,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     //logout button click
-    const logout = document.getElementById("logout_button");
-    if (logout) {
-        logout.addEventListener("click", function (event) {
-            //event.preventDefault(); 
+    const logout_varriable = document.getElementById("logout_button");
+    if (logout_varriable) {
+        logout_varriable.addEventListener("click", function (event) {
+            event.preventDefault(); 
+            console.log("logout")
             logout();
         });
     }
@@ -131,6 +132,7 @@ window.onload = function(event) {
     }
 };
 //onload function
+
 
 //onchange functions
 function v_name(){
@@ -282,6 +284,7 @@ function vgit(github){
         return true;
     }
 }
+
 function vimage(image_link){
     text = image_link;
     let indexa = text.indexOf("https://");
@@ -601,14 +604,6 @@ function showdata(event) {
 
 
 
-//logout
-// function logout() {
-//     sessionStorage.removeItem('Loggedin');
-//     sessionStorage.removeItem('Username');
-//     showlogin();
-// }
-//logout
-
 //puting existing value to the form for edit
 function edit_in_form(event, key, storage) {
     event.preventDefault();
@@ -730,3 +725,11 @@ function del(key, storage) {
     reload_page();
 }
 //delete
+
+//logout
+function logout(){
+    sessionStorage.removeItem('Loggedin');
+    sessionStorage.removeItem('Username');
+    showlogin();
+}
+//logout
