@@ -329,9 +329,13 @@ function varify_and_input() {
         }
 
         if (storage === 'session') {
+            console.log(storage);
             let k = 0;
             for (let i = 0; i < sessionStorage.length; i++) {
                 let ssKey = sessionStorage.key(i);
+                if (ssKey == "Username" || ssKey == "Loggedin" || ssKey == "IsThisFirstTime_Log_From_LiveServer") {
+                    continue;
+                }
                 let storedValue = JSON.parse(sessionStorage.getItem(ssKey));
                 if (storedValue && 'Github' in storedValue) {
                     k++;
@@ -510,7 +514,7 @@ function showdata(event) {
                 user_div.appendChild(user_div_body);
                 document.getElementById('input_given_by_user').appendChild(user_div);
 
-            break;
+            
         }
     }
 }
@@ -601,7 +605,7 @@ function edit_submit(event, key) {
             break;
         }
     }
-    let old_storage = document.forms["myform"]["old_Storage"].value;
+    let old_storage = document.forms["myform"]["old_storage"].value;
     let key_form = document.forms["myform"]["key"].value;
 
     let data = {
