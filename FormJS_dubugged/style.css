@@ -5,7 +5,6 @@
     padding: 2%;
 }
 .col-9{
-    
     margin: 0%;
     padding: 5%;
     height: 100vh;
@@ -51,7 +50,7 @@
     height: 70vh;
     display: none;
 }
-.loginn{
+.login_div{
     height: 70vh;
     display: block;
 }
@@ -71,4 +70,12 @@
 }
 .hidden_paragraph{
     display: none;
+    color: red;
 }
+.input_class{
+    margin-top:10%;margin-bottom:20%;
+}
+.input_div{
+    margin-top:10%;
+}
+

@@ -1,3 +1,137 @@
+//event listners
+document.addEventListener("DOMContentLoaded", function () {
+    //signup form submit
+    const signup_form = document.getElementById("signup_form");
+    if (signup_form) {
+        signup_form.addEventListener("submit", function (event) {
+            event.preventDefault(); 
+            signup(event);
+        });
+    }
+
+    //login form submit
+    const login_form = document.getElementById("login");
+    if (login_form) {
+        login_form.addEventListener("submit", function (event) {
+            event.preventDefault(); 
+            login_process(event);
+        });
+    }
+
+    //data submit
+    const data_form = document.getElementById("myform");
+    if (data_form) {
+        data_form.addEventListener("submit", function (event) {
+            event.preventDefault(); 
+            varify_and_input(event);
+        });
+    }
+
+    //signup username onchange
+    const username_signup_change = document.getElementById("username_signup");
+    if (username_signup_change) {
+        username_signup_change.addEventListener("change", function (event) {
+            event.preventDefault(); 
+            v_username();
+        });
+    }
+    
+    //name change main form
+    const name_change = document.getElementById("Name");
+    if (name_change) {
+        name_change.addEventListener("change", function (event) {
+            event.preventDefault(); 
+            v_name();
+        });
+    }
+
+    //email change main form
+    const email_change = document.getElementById("Email");
+    if (email_change) {
+        email_change.addEventListener("change", function (event) {
+            event.preventDefault(); 
+            v_email();
+        });
+    }
+
+    //number change main form
+    const number_change = document.getElementById("Number");
+    if (number_change) {
+        number_change.addEventListener("change", function (event) {
+            event.preventDefault(); 
+            v_number();
+        });
+    } 
+
+    //github change main form
+    const git_change = document.getElementById("Github");
+    if (git_change) {
+        git_change.addEventListener("change", function (event) {
+            event.preventDefault(); 
+            v_git();
+        });
+    }
+
+    //linkedin change main form
+    const link_change = document.getElementById("Linkedin");
+    if (link_change) {
+        link_change.addEventListener("change", function (event) {
+            event.preventDefault(); 
+            v_link();
+        });
+    }
+
+    //image change main form
+    const image_change = document.getElementById("Image");
+    if (image_change) {
+        image_change.addEventListener("change", function (event) {
+            event.preventDefault(); 
+            v_image();
+        });
+    }
+
+    //signup to login button click
+    const signup_to_login = document.getElementById("showlogin");
+    if (signup_to_login) {
+        signup_to_login.addEventListener("click", function (event) {
+            event.preventDefault(); 
+            showlogin();
+        });
+    }
+
+    //login to signup button click
+    const login_to_signup = document.getElementById("showsignup");
+    if (login_to_signup) {
+        login_to_signup.addEventListener("click", function (event) {
+            event.preventDefault(); 
+            showsignup();
+        });
+    }
+
+    //logout button click
+    const logout = document.getElementById("logout_button");
+    if (logout) {
+        logout.addEventListener("click", function (event) {
+            //event.preventDefault(); 
+            logout();
+        });
+    }
+
+
+});
+//event listners
+
+//onload function
+window.onload = function(event) {
+    if (sessionStorage.getItem('Loggedin') === 'True') {
+        showdata(event);
+        showmain();
+    } else {
+        showlogin();
+    }
+};
+//onload function
+
 //onchange functions
 function v_name(){
     name_text =document.getElementById("Name").value;
@@ -11,7 +145,6 @@ function v_name(){
         document.getElementById("invalid_name").style.display = 'none';
     }
 }
-
 function v_email(){
     email = document.getElementById("Email");
     text = email.value;
@@ -28,16 +161,16 @@ function v_email(){
     }
 }
 function v_number(){
-    number = document.getElementById("Phno");
-    text = document.getElementById("Phno").value;
+    number = document.getElementById("Number");
+    text = document.getElementById("Number").value;
     num_int = parseInt(text)
 
-    if((num_int>9999999999)||(num_int<2002000000)){
-        document.getElementById("Phno").classList.add("invalid");
+    if((num_int > 9999999999)||(num_int < 2002000000)){
+        document.getElementById("Number").classList.add("invalid");
         document.getElementById("invalid_number").style.display = 'block';
     }
     else{
-        document.getElementById("Phno").classList.remove("invalid");
+        document.getElementById("Number").classList.remove("invalid");
         document.getElementById("invalid_number").style.display = 'none';
     }
 }
@@ -81,6 +214,18 @@ function v_image(){
         document.getElementById("invalid_img").style.display = 'block';
     }
 
+}
+function v_username(){
+    name_text =document.getElementById("username_signup").value;
+    const isValid = /^[A-Za-z][A-Za-z0-9_$ ]*$/.test(name_text);
+    if (name_text == "" || isValid == false) {
+        document.getElementById("username_signup").classList.add("invalid");
+        document.getElementById("invalid_username").style.display = 'block';
+    }
+    else{
+        document.getElementById("username_signup").classList.remove("invalid");
+        document.getElementById("invalid_username").style.display = 'none';
+    }
 }
 //onchange functions
 
@@ -155,17 +300,17 @@ function vimage(image_link){
 
 //display and hide functions
 function showlogin() {
-    document.getElementById('login').style.display = 'block';
+    document.getElementById('login_div').style.display = 'block';
     document.getElementById('signup').style.display = 'none';
     document.getElementById('main').style.display = 'none';
 }
 function showmain() {
-    document.getElementById('login').style.display = 'none';
+    document.getElementById('login_div').style.display = 'none';
     document.getElementById('signup').style.display = 'none';
     document.getElementById('main').style.display = 'block';
 }
 function showsignup() {
-    document.getElementById('login').style.display = 'none';
+    document.getElementById('login_div').style.display = 'none';
     document.getElementById('signup').style.display = 'block';
     document.getElementById('main').style.display = 'none';
 }
@@ -186,9 +331,9 @@ function reload_page(){
 //signup
 function signup(event) {
     event.preventDefault();
-    let username = document.forms['signupp']['usernamee'].value;
-    let password = document.forms['signupp']['passwordd'].value;
-    let confirm_password = document.forms['signupp']['password_c'].value;
+    let username = document.forms['signup_form']['username_signup'].value;
+    let password = document.forms['signup_form']['password_signup'].value;
+    let confirm_password = document.forms['signup_form']['password_signup_confirm'].value;
     let key = 0;
     if (vname(username)) {
         alert ("invalid username");
@@ -254,7 +399,7 @@ function login_process(event) {
 function varify_and_input() {
     let name = document.forms["myform"]["Name"].value;
     let email = document.forms["myform"]["Email"].value;
-    let number = document.forms["myform"]["Phno"].value;
+    let number = document.forms["myform"]["Number"].value;
     let github = document.forms["myform"]["Github"].value;
     let linkedin = document.forms["myform"]["Linkedin"].value;
     let img_link = document.forms["myform"]["Image"].value;
@@ -329,7 +474,6 @@ function varify_and_input() {
         }
 
         if (storage === 'session') {
-            console.log(storage);
             let k = 0;
             for (let i = 0; i < sessionStorage.length; i++) {
                 let ssKey = sessionStorage.key(i);
@@ -350,172 +494,107 @@ function varify_and_input() {
 }
 //varify and put the data in users
 
+function show(key,storage,event){
+    let storedValue = null;
+    if (storage == "local") {
+        storedValue = JSON.parse(localStorage.getItem(key));
+    }
+    else{
+        storedValue = JSON.parse(sessionStorage.getItem(key));
+    }
 
+    if (storedValue && 'Github' in storedValue) {
+        let name = storedValue.Name;
+        let email = storedValue.Email;
+        let number = storedValue.Number;
+        let github = storedValue.Github;
+        let linkedin = storedValue.Linkedin;
+        let img_link = storedValue.Img_Link;
+        let storage = storedValue.Storage;
+
+            let user_div = document.createElement('div');
+            user_div.classList.add('card');
+
+            let user_div_body = document.createElement('div')
+            user_div_body.classList.add('card-body')
+
+            let user_div_body_header = document.createElement('h5');
+            user_div_body_header.classList.add('card-title');
+            user_div_body_header.textContent = name;
+
+            let user_div_body_email = document.createElement('p');
+            user_div_body_email.classList.add('card-text');
+            user_div_body_email.textContent = email;
+
+            let user_div_body_phone = document.createElement('p');
+            user_div_body_phone.classList.add('card-text');
+            user_div_body_phone.textContent = number;
+            
+            let user_div_github = document.createElement('button');
+            user_div_github.classList.add('btn');
+            user_div_github.classList.add('btn-primary');
+            user_div_github.textContent = "Github";
+            user_div_github.addEventListener("click",function(){window.open(github)});
+
+            let user_div_linkedin = document.createElement('button');
+            user_div_linkedin.classList.add('btn');
+            user_div_linkedin.classList.add('btn-primary');
+            user_div_linkedin.textContent = "Linkedin";
+            user_div_linkedin.addEventListener("click",function(){window.open(linkedin)});
+            
+            let user_div_image = document.createElement('img');
+            user_div_image.classList.add('imggg');
+            user_div_image.src = img_link;
+            user_div_image.alt = "Pic";
+            
+            let user_div_edit_button = document.createElement('button');
+            user_div_edit_button.classList.add('btn');
+            user_div_edit_button.classList.add('btn-primary');
+            user_div_edit_button.textContent = "edit";
+            user_div_edit_button.addEventListener("click",function(){edit_in_form(event,key,storage)});
+
+            let user_div_delete_button = document.createElement('button');
+            user_div_delete_button.classList.add('btn');
+            user_div_delete_button.classList.add('btn-primary');
+            user_div_delete_button.textContent = "delete";
+            user_div_delete_button.addEventListener("click",function(){del(key,storage)});
+
+            let line_brk = document.createElement('br');
+
+            user_div_body.appendChild(user_div_image);
+            user_div_body.appendChild(user_div_body_header);
+            user_div_body.appendChild(user_div_body_email);
+            user_div_body.appendChild(user_div_body_phone);
+            user_div_body.appendChild(user_div_github);
+            user_div_body.appendChild(user_div_linkedin);
+            user_div_body.appendChild(line_brk);
+            user_div_body.appendChild(user_div_edit_button);
+            user_div_body.appendChild(user_div_delete_button);
+
+            user_div.appendChild(user_div_body);
+            document.getElementById('input_given_by_user').appendChild(user_div);        
+    }
+}
 
 
 //shows inputted data
 function showdata(event) {
+    //local show
+    let storage_of_show = "local"
     event.preventDefault();
     for (let i = 0; i < localStorage.length; i++) {
         let lsKey = localStorage.key(i);
-        let storedValue = JSON.parse(localStorage.getItem(lsKey));
-
-        if (storedValue && 'Github' in storedValue) {
-            let name = storedValue.Name;
-            let email = storedValue.Email;
-            let number = storedValue.Number;
-            let github = storedValue.Github;
-            let linkedin = storedValue.Linkedin;
-            let img_link = storedValue.Img_Link;
-            let storage = storedValue.Storage;
-            let key = lsKey;
-
-                let user_div = document.createElement('div');
-                user_div.classList.add('card');
-
-                let user_div_body = document.createElement('div')
-                user_div_body.classList.add('card-body')
-
-                let user_div_body_header = document.createElement('h5');
-                user_div_body_header.classList.add('card-title');
-                user_div_body_header.textContent = name;
-
-                let user_div_body_email = document.createElement('p');
-                user_div_body_email.classList.add('card-text');
-                user_div_body_email.textContent = email;
-
-                let user_div_body_phone = document.createElement('p');
-                user_div_body_phone.classList.add('card-text');
-                user_div_body_phone.textContent = number;
-                
-                let user_div_github = document.createElement('button');
-                user_div_github.classList.add('btn');
-                user_div_github.classList.add('btn-primary');
-                user_div_github.textContent = "Github";
-                user_div_github.addEventListener("click",function(){window.open(github)});
-
-                let user_div_linkedin = document.createElement('button');
-                user_div_linkedin.classList.add('btn');
-                user_div_linkedin.classList.add('btn-primary');
-                user_div_linkedin.textContent = "Linkedin";
-                user_div_linkedin.addEventListener("click",function(){window.open(linkedin)});
-                
-                let user_div_image = document.createElement('img');
-                user_div_image.classList.add('imggg');
-                user_div_image.src = img_link;
-                
-                let user_div_edit_button = document.createElement('button');
-                user_div_edit_button.classList.add('btn');
-                user_div_edit_button.classList.add('btn-primary');
-                user_div_edit_button.textContent = "edit";
-                user_div_edit_button.addEventListener("click",function(){edit_in_form(event,key,storage)});
-
-                let user_div_delete_button = document.createElement('button');
-                user_div_delete_button.classList.add('btn');
-                user_div_delete_button.classList.add('btn-primary');
-                user_div_delete_button.textContent = "delete";
-                user_div_delete_button.addEventListener("click",function(){del(key,storage)});
-
-                let line_brk = document.createElement('br');
-
-                user_div_body.appendChild(user_div_image);
-                user_div_body.appendChild(user_div_body_header);
-                user_div_body.appendChild(user_div_body_email);
-                user_div_body.appendChild(user_div_body_phone);
-                user_div_body.appendChild(user_div_github);
-                user_div_body.appendChild(user_div_linkedin);
-                user_div_body.appendChild(line_brk);
-                user_div_body.appendChild(user_div_edit_button);
-                user_div_body.appendChild(user_div_delete_button);
-
-                user_div.appendChild(user_div_body);
-                document.getElementById('input_given_by_user').appendChild(user_div);
-
-            
-        }
+        show(lsKey,storage_of_show,event);
     }
 
+    //session show
+    storage_of_show = "session"
     for (let i = 0; i < sessionStorage.length; i++) {
         let ssKey = sessionStorage.key(i);
         if (ssKey == "Username" || ssKey == "Loggedin" || ssKey == "IsThisFirstTime_Log_From_LiveServer") {
             continue;
         }
-        console.log(ssKey);
-        let storedValue = JSON.parse(sessionStorage.getItem(ssKey));
-
-        if (storedValue && 'Github' in storedValue) {
-            let name = storedValue.Name;
-            let email = storedValue.Email;
-            let number = storedValue.Number;
-            let github = storedValue.Github;
-            let linkedin = storedValue.Linkedin;
-            let img_link = storedValue.Img_Link;
-            let storage = storedValue.Storage;
-            let key = ssKey;
-
-            let user_div = document.createElement('div');
-                user_div.classList.add('card');
-
-                let user_div_body = document.createElement('div')
-                user_div_body.classList.add('card-body')
-
-                let user_div_body_header = document.createElement('h5');
-                user_div_body_header.classList.add('card-title');
-                user_div_body_header.textContent = name;
-
-                let user_div_body_email = document.createElement('p');
-                user_div_body_email.classList.add('card-text');
-                user_div_body_email.textContent = email;
-
-                let user_div_body_phone = document.createElement('p');
-                user_div_body_phone.classList.add('card-text');
-                user_div_body_phone.textContent = number;
-                
-                let user_div_github = document.createElement('button');
-                user_div_github.classList.add('btn');
-                user_div_github.classList.add('btn-primary');
-                user_div_github.textContent = "Github";
-                user_div_github.addEventListener("click",function(){window.open(github)});
-
-                let user_div_linkedin = document.createElement('button');
-                user_div_linkedin.classList.add('btn');
-                user_div_linkedin.classList.add('btn-primary');
-                user_div_linkedin.textContent = "Linkedin";
-                user_div_linkedin.addEventListener("click",function(){window.open(linkedin)});
-                
-                let user_div_image = document.createElement('img');
-                user_div_image.classList.add('imggg');
-                user_div_image.src = img_link;
-                
-                let user_div_edit_button = document.createElement('button');
-                user_div_edit_button.classList.add('btn');
-                user_div_edit_button.classList.add('btn-primary');
-                user_div_edit_button.textContent = "edit";
-                user_div_edit_button.addEventListener("click",function(){edit_in_form(event,key,storage)});
-
-                let user_div_delete_button = document.createElement('button');
-                user_div_delete_button.classList.add('btn');
-                user_div_delete_button.classList.add('btn-primary');
-                user_div_delete_button.textContent = "delete";
-                user_div_delete_button.addEventListener("click",function(){del(key,storage)});
-
-                let line_brk = document.createElement('br');
-
-                user_div_body.appendChild(user_div_image);
-                user_div_body.appendChild(user_div_body_header);
-                user_div_body.appendChild(user_div_body_email);
-                user_div_body.appendChild(user_div_body_phone);
-                user_div_body.appendChild(user_div_github);
-                user_div_body.appendChild(user_div_linkedin);
-                user_div_body.appendChild(line_brk);
-                user_div_body.appendChild(user_div_edit_button);
-                user_div_body.appendChild(user_div_delete_button);
-
-                user_div.appendChild(user_div_body);
-                document.getElementById('input_given_by_user').appendChild(user_div);
-
-            
-        }
+        show(ssKey,storage_of_show,event);
     }
 }
 //shows inputted data
@@ -523,11 +602,11 @@ function showdata(event) {
 
 
 //logout
-function logout() {
-    sessionStorage.removeItem('Loggedin');
-    sessionStorage.removeItem('Username');
-    showlogin();
-}
+// function logout() {
+//     sessionStorage.removeItem('Loggedin');
+//     sessionStorage.removeItem('Username');
+//     showlogin();
+// }
 //logout
 
 //puting existing value to the form for edit
@@ -552,7 +631,7 @@ function edit_in_form(event, key, storage) {
 
         document.forms["myform"]["Name"].value = name;
         document.forms["myform"]["Email"].value = email;
-        document.forms["myform"]["Phno"].value = number;
+        document.forms["myform"]["Number"].value = number;
         document.forms["myform"]["Github"].value = github;
         document.forms["myform"]["Linkedin"].value = linkedin;
         document.forms["myform"]["Image"].value = img_link;
@@ -593,7 +672,7 @@ function edit_submit(event, key) {
 
     let name = document.forms["myform"]["Name"].value;
     let email = document.forms["myform"]["Email"].value;
-    let number = document.forms["myform"]["Phno"].value;
+    let number = document.forms["myform"]["Number"].value;
     let github = document.forms["myform"]["Github"].value;
     let linkedin = document.forms["myform"]["Linkedin"].value;
     let img_link = document.forms["myform"]["Image"].value;

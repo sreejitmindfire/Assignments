@@ -6,137 +6,99 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <script src="javascript.js"></script>
-    <title>Document</title>
-    
+    <title>Document</title>  
 </head>
 <body>
-    <script>
-        let usernameeee = null;
-        let gIthub = null
-        let linkk = null 
-        window.onload = function() {
-            // localStorage.clear();
-            // sessionStorage.clear();
-            if (sessionStorage.getItem('Loggedin') === 'True') {
-                showdata(event);
-                showmain();
-            } else {
-                showlogin();
-            }
-        };
-    </script>
-
-
-
-
-
     <!-- signup block -->
     <div class="signup col-12" id="signup">
-        
         <div class="login_box">
-            <form onsubmit=signup(event) id="signupp">
-                <div class="input-group mb-3" style="margin-top:10%;">
+            <form id="signup_form">
+                <div class="input-group mb-3 input_div">
                     <span class="input-group-text" id="basic-addon1">@</span>
-                    <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" id="usernamee">
+                    <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" id="username_signup">
+                    <br>
+                    <p id="invalid_username" class="hidden_paragraph">The Username is invalid</p>
                 </div>
-                <div class="input-group mb-3" style="margin-top:10%;margin-bottom:20%;">
+                <div class="input-group mb-3 input_class" >
                     <span class="input-group-text" id="basic-addon1">P</span>
-                    <input type="password" class="form-control" placeholder="password"  aria-describedby="basic-addon1" id="passwordd">
+                    <input type="password" class="form-control" placeholder="password"  aria-describedby="basic-addon1" id="password_signup" >
                 </div>
-                <div class="input-group mb-3" style="margin-top:10%;margin-bottom:20%;">
+                <div class="input-group mb-3 input_class">
                     <span class="input-group-text" id="basic-addon1">CP</span>
-                    <input type="password" class="form-control" placeholder="confirm password"  aria-describedby="basic-addon1" id="password_c">
+                    <input type="password" class="form-control" placeholder="confirm password"  aria-describedby="basic-addon1" id="password_signup_confirm">
+                    <br>
+                    
                 </div>
                 <div class="d-grid gap-2 col-6 mx-auto">
                     <button class="btn btn-primary" type="submit">Signup</button>
                 </div>
-
                 <div class="d-grid gap-2 col-6 mx-auto">
-                    <button class="btn btn-primary" type="button" onclick="showlogin();">Login</button>
+                    <button class="btn btn-primary" type="button" id="showlogin">Login</button>
                 </div>
             </form>
         </div>
-        
     </div>
-    <!-- signup block -->
-
-
-
-
-
-
     <!-- login block -->
-    <div class="loginn col-12" id="login">
-        
+    <div class="login_div col-12" id="login_div">
         <div class="login_box">
-            <form onsubmit=login_process(event) id="login">
-            <div class="input-group mb-3" style="margin-top:10%;">
+            <form id="login">
+            <div class="input-group mb-3 input_div">
                 <span class="input-group-text" id="basic-addon1">@</span>
                 <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" id="username">
             </div>
-            <div class="input-group mb-3" style="margin-top:10%;margin-bottom:20%;">
+            <div class="input-group mb-3 input_class">
                 <span class="input-group-text" id="basic-addon1">P</span>
-                <input type="password" class="form-control" placeholder="password"  aria-describedby="basic-addon1" id="password">
+                <input type="password" class="form-control" placeholder="password" aria-describedby="basic-addon1" id="password">
             </div>
             <div class="d-grid gap-2 col-6 mx-auto">
                 <button class="btn btn-primary" type="submit">Login</button>
             </div>
             </form>
             <div class="d-grid gap-2 col-6 mx-auto">
-                <button class="btn btn-primary" type="button" onclick="showsignup();">Signup</button>
+                <button class="btn btn-primary" type="button" id="showsignup">Signup</button>
             </div>
         </div>
     </div>
-    <!-- login block -->
-    
-
-
-
-
     <!-- main block -->
     <div class="col-12 hidden main" id="main">
         <!-- one row -->
         <div class="row">
             <!-- sidebar -->
             <div class="col-3 overflow-auto">
-                <div id="input_given_by_user">
-
-                </div>
+                <div id="input_given_by_user"></div>
             </div>
-            <!-- sidebar -->
-
-            <!-- main form -->
+            <!-- form -->
             <div class="col-9 overflow-auto">
-                <form id="myform" onsubmit="varify_and_input(event)">
+                <form id="myform">
                     <div class="mb-3">
                         <label for="Name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="Name" placeholder="Name" onchange="v_name()">
-                        <p id="invalid_name" style="color: red;" class="hidden_paragraph">The Name is invalid</p>
+                        <input type="text" class="form-control" id="Name" placeholder="Name">
+                        <p id="invalid_name" class="hidden_paragraph">The Name is invalid</p>
                     </div>
                     <div class="mb-3">
                         <label for="Email" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="Email" placeholder="name@example.com" onchange="v_email()">
-                        <p id="invalid_email" style="color: red;" class="hidden_paragraph">The Email is invalid</p>
+                        <input type="email" class="form-control" id="Email" placeholder="name@example.com">
+                        <p id="invalid_email" class="hidden_paragraph">The Email is invalid</p>
                     </div>
                     <div class="mb-3">
-                        <label for="Phno" class="form-label">Phone</label>
-                        <input type="number" class="form-control" id="Phno" placeholder="xxxxxxxxxx" min="2002000000" max="9999999999" onchange="v_number()">
-                        <p id="invalid_number" style="color: red;" class="hidden_paragraph" >The Number is invalid</p>
+                        <label for="Number" class="form-label">Phone</label>
+                        <input type="number" class="form-control" id="Number" placeholder="xxxxxxxxxx" min="2002000000" max="9999999999">
+                        <p id="invalid_number" class="hidden_paragraph" >The Number is invalid</p>
                     </div>
                     <div class="mb-3">
                         <label for="Github" class="form-label">Github</label>
-                        <input type="url" class="form-control" id="Github" placeholder="github.com/username" onchange="v_git()">
-                        <p id="invalid_git" style="color: red;" class="hidden_paragraph">The Github Profile Link is invalid</p>
+                        <input type="url" class="form-control" id="Github" placeholder="github.com/username">
+                        <p id="invalid_git" class="hidden_paragraph">The Github Profile Link is invalid</p>
                     </div>
                     <div class="mb-3">
                         <label for="Linkedin" class="form-label">Linkedin</label>
-                        <input type="url" class="form-control" id="Linkedin" placeholder="linkedin.com/in/username" onchange="v_link()">
-                        <p id="invalid_link" style="color: red;" class="hidden_paragraph">The Linkedin Profile Link is invalid</p>
+                        <input type="url" class="form-control" id="Linkedin" placeholder="linkedin.com/in/username">
+                        <p id="invalid_link" class="hidden_paragraph">The Linkedin Profile Link is invalid</p>
                     </div>
                     <div class="mb-3">
                         <label for="Image" class="form-label">Image URL</label>
-                        <input type="url" class="form-control" id="Image" placeholder="Image URL" onchange="v_image()">
-                        <p id="invalid_img" style="color: red;" class="hidden_paragraph">The Image link is invalid</p>
+                        <input type="url" class="form-control" id="Image" placeholder="Image URL">
+                        <p id="invalid_img" class="hidden_paragraph">The Image link is invalid</p>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="Rad" id="local" value="local"> 
@@ -152,12 +114,10 @@
                       </div>
                     <button type="submit" class="btn btn-primary btn-lg" id="submit_button">Submit</button>
                 </form>
-                <button onclick="logout()" class="btn btn-primary btn-lg">Logout</button>
+                <button  class="btn btn-primary btn-lg" id="logout_button">Logout</button>
             </div>
-            <!-- main form -->
         </div>
         <!-- one row -->
-    </div>
-    <!-- main block -->    
+    </div>  
 </body>
 </html>
