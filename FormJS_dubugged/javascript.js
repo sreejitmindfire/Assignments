@@ -125,6 +125,8 @@ document.addEventListener("DOMContentLoaded", function () {
 //onload function
 window.onload = function(event) {
     if (sessionStorage.getItem('Loggedin') === 'True') {
+        // localStorage.clear();
+        // sessionStorage.clear();
         showdata(event);
         showmain();
     } else {
@@ -585,9 +587,13 @@ function showdata(event) {
     //local show
     let storage_of_show = "local"
     event.preventDefault();
+    let username = sessionStorage.getItem('Username');
+    console.log(username); 
     for (let i = 0; i < localStorage.length; i++) {
         let lsKey = localStorage.key(i);
-        show(lsKey,storage_of_show,event);
+        if (lsKey.includes(username)){
+            show(lsKey,storage_of_show,event);
+        }
     }
 
     //session show
@@ -597,7 +603,9 @@ function showdata(event) {
         if (ssKey == "Username" || ssKey == "Loggedin" || ssKey == "IsThisFirstTime_Log_From_LiveServer") {
             continue;
         }
-        show(ssKey,storage_of_show,event);
+        if (ssKey.includes(username)){
+            show(ssKey,storage_of_show,event);
+        }
     }
 }
 //shows inputted data
