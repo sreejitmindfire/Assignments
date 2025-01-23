@@ -1,81 +1,100 @@
-.col-3{
+.col-3 {
     background-color: aqua;
     margin: 0%;
     height: 100vh;
     padding: 2%;
 }
-.col-9{
+
+.col-9 {
     margin: 0%;
     padding: 5%;
     height: 100vh;
 }
-.col-12{
+
+.col-12 {
     margin: 0%;
     padding: 0%;
 }
-.row{
+
+.row {
     width: 100%;
 }
-.imggg{
+
+.imgOfSidebar {
     float: left;
-    width: 20%;
+    width: 25%;
     height: auto;
-    margin:1%;
+    margin: 2%;
 }
-.show{
+
+.show {
     display: flex;
     align-items: center;
     margin-bottom: 10%;
 }
-.btn{
+
+.btn {
     margin-bottom: 5%;
     margin-right: 5%;
 }
-.form-check{
+
+.form-check {
     margin-bottom: 2%;
 }
-.card{
+
+.card {
     margin: 1%;
 }
-.login_box{
+
+.login_box {
     width: 30%;
     height: 40%;
     margin-left: 35%;
-    margin-top: 12%;;
+    margin-top: 12%;
+    ;
 }
-.input-group{
+
+.input-group {
     margin-top: 10%;
 }
-.signup{
+
+.signup {
     height: 70vh;
     display: none;
 }
-.login_div{
+
+.login_div {
     height: 70vh;
     display: block;
 }
-.main{
+
+.main {
     display: none;
 }
-#input_given_by_user{
+
+#input_given_by_user {
     display: flexbox;
     flex-direction: column;
     justify-content: flex-start;
     width: 80%;
-    height:auto;
+    height: auto;
 }
+
 .invalid {
     border-color: red;
     color: red;
 }
-.hidden_paragraph{
+
+.hidden_paragraph {
     display: none;
     color: red;
 }
-.input_class{
-    margin-top:10%;margin-bottom:20%;
-}
-.input_div{
-    margin-top:10%;
+
+.input_class {
+    margin-top: 10%;
+    margin-bottom: 20%;
 }
 
+.input_div {
+    margin-top: 10%;
+}
