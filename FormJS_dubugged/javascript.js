@@ -1,3 +1,49 @@
+//signup button disable function
+function activateSignupButton(){
+    let username = document.getElementById("username_signup").value;
+    let password = document.getElementById("password_signup").value;
+    let passwordConfirm = document.getElementById("password_signup_confirm").value;
+
+    let usernameVarification = vname(username);
+    let passwordVarification = varifyPassword(password,passwordConfirm);
+
+    let signupButton = document.getElementById('signupButton');
+    console.log("user: "+usernameVarification);
+    console.log("password: "+passwordVarification);
+    if (usernameVarification && passwordVarification) {
+        signupButton.disabled = false;
+    }
+    else{
+        signupButton.disabled = true;
+    }
+}
+//signup button disable function
+//button diabled function
+function activateButton(){
+    let name = document.getElementById("Name").value;
+    let number = document.getElementById("Number").value;
+    let email = document.getElementById("Email").value;
+    let github = document.getAnimations("Github").value;
+    let linkedin = document.getElementById("Linkedin").value;
+    let image = document.getElementById("Image").value;
+
+    let nameVarification = vname(name);
+    let numberVarification = vnumber(number);
+    let emailVarification = vnumber(email);
+    let githubVarification = vnumber(github);
+    let linkedinVarification = vnumber(linkedin);
+    let imageVarification = vnumber(image);
+    let submitButton = document.getElementById('submit_button');
+    if (nameVarification && emailVarification && numberVarification && githubVarification && linkedinVarification && imageVarification){
+        submitButton.disabled = false;
+    }
+    else{
+        submitButton.disabled = true;
+    }
+}
+
+//button diabled function
+
 //event listners
 document.addEventListener("DOMContentLoaded", function () {
     //signup form submit
@@ -33,6 +79,15 @@ document.addEventListener("DOMContentLoaded", function () {
         username_signup_change.addEventListener("change", function (event) {
             event.preventDefault(); 
             v_username();
+        });
+    }
+
+    //signup password onchange
+    const username_password_change = document.getElementById("password_signup_confirm");
+    if (username_password_change) {
+        username_password_change.addEventListener("change", function (event) {
+            event.preventDefault(); 
+            v_password();
         });
     }
     
@@ -139,64 +194,56 @@ window.onload = function(event) {
 //onchange functions
 function v_name(){
     name_text =document.getElementById("Name").value;
-    const isValid = /^[A-Za-z][A-Za-z0-9_$ ]*$/.test(name_text);
-    if (name_text == "" || isValid == false) {
-        document.getElementById("Name").classList.add("invalid");
-        document.getElementById("invalid_name").style.display = 'block';
-    }
-    else{
+    if (vname(name_text)) {
         document.getElementById("Name").classList.remove("invalid");
         document.getElementById("invalid_name").style.display = 'none';
     }
-}
-function v_email(){
-    email = document.getElementById("Email");
-    text = email.value;
-    let indexa = text.indexOf("@");
-    let indexdot = text.indexOf(".");
-
-    if((indexa <= 0)||(indexdot < indexa)){
-        document.getElementById("Email").classList.add("invalid");
-        document.getElementById("invalid_email").style.display = 'block';
-    }
     else{
-        document.getElementById("Email").classList.remove("invalid");
-        document.getElementById("invalid_email").style.display = 'none';
+        document.getElementById("Name").classList.add("invalid");
+        document.getElementById("invalid_name").style.display = 'block';
     }
+    activateButton();
 }
 function v_number(){
-    number = document.getElementById("Number");
-    text = document.getElementById("Number").value;
-    num_int = parseInt(text)
-
-    if((num_int > 9999999999)||(num_int < 2002000000)){
-        document.getElementById("Number").classList.add("invalid");
-        document.getElementById("invalid_number").style.display = 'block';
-    }
-    else{
+    number = document.getElementById("Number").value;
+    num_int = parseInt(number)
+    if(vnumber(number)){
         document.getElementById("Number").classList.remove("invalid");
         document.getElementById("invalid_number").style.display = 'none';
     }
+    else{
+        document.getElementById("Number").classList.add("invalid");
+        document.getElementById("invalid_number").style.display = 'block';
+    }
+    activateButton();
 }
-function v_link(){
-    text = document.getElementById("Linkedin").value;
-    let indexa = text.indexOf("https://linkedin.com");
-    let indexb = text.indexOf("https://www.linkedin.com");
-    if(indexa != 0 && indexb != 0){
-        document.getElementById("Linkedin").classList.add("invalid");
-        document.getElementById("invalid_link").style.display = 'block';
+function v_email(){
+    email = document.getElementById("Email").value;
+    if(vemail(email)){
+        document.getElementById("Email").classList.remove("invalid");
+        document.getElementById("invalid_email").style.display = 'none';
     }
     else{
+        document.getElementById("Email").classList.add("invalid");
+        document.getElementById("invalid_email").style.display = 'block';
+    }
+    activateButton()
+}
+function v_link(){
+    let linkedin = document.getElementById("Linkedin").value;
+    if(vlink(linkedin)){
         document.getElementById("Linkedin").classList.remove("invalid");
         document.getElementById("invalid_link").style.display = 'none';
     }
+    else{
+        document.getElementById("Linkedin").classList.add("invalid");
+        document.getElementById("invalid_link").style.display = 'block'
+    }
+    activateButton()
 }
 function v_git(){
-    email = document.getElementById("Github");
-    text = document.getElementById("Github").value;
-    let indexa = text.indexOf("https://github.com");
-    let indexb = text.indexOf("https://www.github.com");
-    if(indexa == 0 || indexb == 0){
+    github = document.getElementById("Github").value;
+    if(vgit(github)){
         document.getElementById("Github").classList.remove("invalid");
         document.getElementById("invalid_git").style.display = 'none';
     }
@@ -204,12 +251,11 @@ function v_git(){
         document.getElementById("Github").classList.add("invalid");
         document.getElementById("invalid_git").style.display = 'block';
     }
-
+    activateButton();
 }
 function v_image(){
-    text = document.getElementById("Image").value;
-    let indexa = text.indexOf("https://");
-    if(indexa == 0){
+    let image = document.getElementById("Image").value;
+    if(vimage(image)){
         document.getElementById("Image").classList.remove("invalid");
         document.getElementById("invalid_img").style.display = 'none';
     }
@@ -217,47 +263,64 @@ function v_image(){
         document.getElementById("Image").classList.add("invalid");
         document.getElementById("invalid_img").style.display = 'block';
     }
-
+    activateButton();
 }
 function v_username(){
     name_text =document.getElementById("username_signup").value;
-    const isValid = /^[A-Za-z][A-Za-z0-9_$ ]*$/.test(name_text);
-    if (name_text == "" || isValid == false) {
-        document.getElementById("username_signup").classList.add("invalid");
-        document.getElementById("invalid_username").style.display = 'block';
-    }
-    else{
+    if (vname(name_text)) {
         document.getElementById("username_signup").classList.remove("invalid");
         document.getElementById("invalid_username").style.display = 'none';
     }
+    else{
+        document.getElementById("username_signup").classList.add("invalid");
+        document.getElementById("invalid_username").style.display = 'block';
+    }
+    activateSignupButton();
+}
+function v_password()
+{
+    let password = document.getElementById("password_signup").value;
+    let confirmPassword = document.getElementById("password_signup_confirm").value;
+    if(varifyPassword(password,confirmPassword)){
+        document.getElementById("password_signup").classList.remove("invalid");
+        document.getElementById("password_signup_confirm").classList.remove("invalid");
+        document.getElementById("passwordErrorShow").style.display = 'none';
+    }
+    else{
+        document.getElementById("password_signup").classList.add("invalid");
+        document.getElementById("password_signup_confirm").classList.add("invalid");
+        document.getElementById("passwordErrorShow").style.display = 'block';
+    }
+    activateSignupButton();
 }
 //onchange functions
 
 
 
-//onsubmit verification functions
+//verification functions
 function vname(name){
     const isValid = /^[A-Za-z][A-Za-z0-9_$ ]*$/.test(name);
     if (name == "" || isValid == false) {
-        return true;
+        return false;
     }
     else{
-        return false;
+        return true;
     }
 }
 function vnumber(number){
-    if (number == null) {
-        return true;
-    }
-    else{
+    if((number > 9999999999)||(number < 2002000000)){
         return false;
     }
+    else{
+        return true;
+    }
 }
+
 function vemail(email){
     text = email;
     let indexa = text.indexOf("@");
     let indexdot = text.indexOf(".");
-    if((indexa > 0)&&(indexdot > indexa)){
+    if((indexa <= 0)&&(indexdot < indexa)){
         return false;
     }
     else{
@@ -268,7 +331,7 @@ function vlink(linkedin){
     text = linkedin;
     let indexa = text.indexOf("https://linkedin.com");
     let indexb = text.indexOf("https://www.linkedin.com");
-    if(indexa == 0 || indexb == 0){
+    if(indexa != 0 && indexb != 0){
         return false;
     }
     else{
@@ -276,27 +339,43 @@ function vlink(linkedin){
     }
 }
 function vgit(github){
-    text = github;
-    let indexa = text.indexOf("https://github.com");
-    let indexb = text.indexOf("https://github.com");
-    if(indexa == 0 || indexb == 0){
+    if (github == undefined){
         return false;
     }
     else{
-        return true;
-    }
+        let indexa = github.indexOf("https://github.com");
+        let indexb = github.indexOf("https://github.com");
+        if(indexa != 0 && indexb != 0){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }    
 }
 
 function vimage(image_link){
     text = image_link;
     let indexa = text.indexOf("https://");
-    if(indexa == 0){
+    if(indexa != 0){
         return false;
     }
     else{
         return true;
     }
 
+}
+
+function varifyPassword(password, confirmPassword){
+    if (password == "") {
+        return false;
+    }
+    if(password == confirmPassword){
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 //onsubmit verification functions
 
@@ -308,6 +387,7 @@ function showlogin() {
     document.getElementById('login_div').style.display = 'block';
     document.getElementById('signup').style.display = 'none';
     document.getElementById('main').style.display = 'none';
+    document.getElementById('signup_form').reset();
 }
 function showmain() {
     document.getElementById('login_div').style.display = 'none';
@@ -318,6 +398,7 @@ function showsignup() {
     document.getElementById('login_div').style.display = 'none';
     document.getElementById('signup').style.display = 'block';
     document.getElementById('main').style.display = 'none';
+    document.getElementById('login').reset();
 }
 //display and hide functions
 
@@ -416,45 +497,6 @@ function varify_and_input() {
             break;
         }
     }
-
-    //name validation after submission
-    if (v_name(name)) {
-        alert("Invalid name");
-        return false;
-    }
-
-    //email validation after submission
-    else if (vemail(email)) {
-        alert("email should be valid");
-        return false;
-    }
-
-    //number validation after submission
-    else if (v_number(number)) {
-        alert("Phone number should be valid");
-        return false;
-    }
-
-    //github validation after submission
-    else if (vgit(github)) {
-        alert("github should be valid");
-        return false;
-    }
-
-    //linkedin validation after submission
-    else if (vlink(linkedin)) {
-        alert("linkedin should be valid");
-        return false;
-    }
-
-    //image validation after submission
-    else if (vimage(img_link)) {
-        alert("image link should be valid");
-        return false;
-    }
-
-    //data entry in local storage
-    else {
         let data = {
             "Name": name,
             "Email": email,
@@ -495,7 +537,6 @@ function varify_and_input() {
         }
 
         reload_page();
-    }
 }
 //varify and put the data in users
 
@@ -663,6 +704,7 @@ function edit_in_form(event, key, storage) {
             edit_submit(event,key);
         }
     }
+    activateButton();
 }
 //puting existing value to the form for edit
 

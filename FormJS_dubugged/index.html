@@ -16,26 +16,24 @@
                 <div class="input-group mb-3 input_div">
                     <span class="input-group-text" id="basic-addon1">@</span>
                     <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" id="username_signup">
-                    <br>
-                    <p id="invalid_username" class="hidden_paragraph">The Username is invalid</p>
                 </div>
+                <p id="invalid_username" class="hidden_paragraph">The Username is invalid</p>
                 <div class="input-group mb-3 input_class" >
                     <span class="input-group-text" id="basic-addon1">P</span>
                     <input type="password" class="form-control" placeholder="password"  aria-describedby="basic-addon1" id="password_signup" >
                 </div>
                 <div class="input-group mb-3 input_class">
                     <span class="input-group-text" id="basic-addon1">CP</span>
-                    <input type="password" class="form-control" placeholder="confirm password"  aria-describedby="basic-addon1" id="password_signup_confirm">
-                    <br>
-                    
+                    <input type="password" class="form-control" placeholder="confirm password"  aria-describedby="basic-addon1" id="password_signup_confirm"><br>    
                 </div>
+                <p class="hidden_paragraph" id="passwordErrorShow">passwords do not match</p>
                 <div class="d-grid gap-2 col-6 mx-auto">
-                    <button class="btn btn-primary" type="submit">Signup</button>
+                    <button class="btn btn-primary" type="submit" id="signupButton" disabled>Signup</button>
                 </div>
+            </form>
                 <div class="d-grid gap-2 col-6 mx-auto">
                     <button class="btn btn-primary" type="button" id="showlogin">Login</button>
                 </div>
-            </form>
         </div>
     </div>
     <!-- login block -->
@@ -112,7 +110,7 @@
                           Session Storage
                         </label>
                       </div>
-                    <button type="submit" class="btn btn-primary btn-lg" id="submit_button">Submit</button>
+                    <button type="submit" class="btn btn-primary btn-lg" id="submit_button" disabled>Submit</button>
                 </form>
                 <button  class="btn btn-primary btn-lg" id="logout_button">Logout</button>
             </div>
