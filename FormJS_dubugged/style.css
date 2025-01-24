@@ -98,3 +98,6 @@
 .input_div {
     margin-top: 10%;
 }
+.hiddenButton{
+    display: none;
+}

@@ -4,12 +4,10 @@ function activateSignupButton() {
     let password = document.getElementById("password_signup").value;
     let passwordConfirm = document.getElementById("password_signup_confirm").value;
 
-    let usernameVarification = vname(username) && (!checkExistingUsername(username));
+    let usernameVarification = varifyName(username) && (!checkExistingUsername(username));
     let passwordVarification = varifyPassword(password, passwordConfirm);
 
     let signupButton = document.getElementById('signupButton');
-    console.log("user: " + usernameVarification);
-    console.log("password: " + passwordVarification);
     if (usernameVarification && passwordVarification) {
         signupButton.disabled = false;
     } else {
@@ -26,17 +24,20 @@ function activateButton() {
     let linkedin = document.getElementById("Linkedin").value;
     let image = document.getElementById("Image").value;
 
-    let nameVarification = vname(name);
-    let numberVarification = vnumber(number);
-    let emailVarification = vnumber(email);
-    let githubVarification = vnumber(github);
-    let linkedinVarification = vnumber(linkedin);
-    let imageVarification = vnumber(image);
+    let nameVarification = varifyName(name);
+    let numberVarification = varifyNumber(number);
+    let emailVarification = varifyNumber(email);
+    let githubVarification = varifyNumber(github);
+    let linkedinVarification = varifyNumber(linkedin);
+    let imageVarification = varifyNumber(image);
     let submitButton = document.getElementById('submit_button');
+    let editButton = document.getElementById('edit_button');
     if (nameVarification && emailVarification && numberVarification && githubVarification && linkedinVarification && imageVarification) {
         submitButton.disabled = false;
+        editButton.disabled = false;
     } else {
         submitButton.disabled = true;
+        editButton.disabled = true;
     }
 }
 
@@ -53,12 +54,20 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    const edit_form = document.getElementById("edit_form");
+    if (signup_form) {
+        signup_form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            editSubmit(event);
+        });
+    }
+
     //login form submit
     const login_form = document.getElementById("login");
     if (login_form) {
         login_form.addEventListener("submit", function (event) {
             event.preventDefault();
-            login_process(event);
+            loginProcess(event);
         });
     }
 
@@ -67,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (data_form) {
         data_form.addEventListener("submit", function (event) {
             event.preventDefault();
-            varify_and_input(event);
+            input(event);
         });
     }
 
@@ -76,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (username_signup_change) {
         username_signup_change.addEventListener("change", function (event) {
             event.preventDefault();
-            v_username();
+            usernameOnchange();
         });
     }
 
@@ -85,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (username_password_change) {
         username_password_change.addEventListener("change", function (event) {
             event.preventDefault();
-            v_password();
+            passwordOnchange();
         });
     }
 
@@ -94,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (name_change) {
         name_change.addEventListener("change", function (event) {
             event.preventDefault();
-            v_name();
+            nameOnChange();
         });
     }
 
@@ -103,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (email_change) {
         email_change.addEventListener("change", function (event) {
             event.preventDefault();
-            v_email();
+            emailOnChange();
         });
     }
 
@@ -112,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (number_change) {
         number_change.addEventListener("change", function (event) {
             event.preventDefault();
-            v_number();
+            numberOnChange();
         });
     }
 
@@ -121,7 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (git_change) {
         git_change.addEventListener("change", function (event) {
             event.preventDefault();
-            v_git();
+            githubOnChange();
         });
     }
 
@@ -130,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (link_change) {
         link_change.addEventListener("change", function (event) {
             event.preventDefault();
-            v_link();
+            linkedinOnChange();
         });
     }
 
@@ -139,7 +148,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (image_change) {
         image_change.addEventListener("change", function (event) {
             event.preventDefault();
-            v_image();
+            imageOnChange();
         });
     }
 
@@ -148,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (signup_to_login) {
         signup_to_login.addEventListener("click", function (event) {
             event.preventDefault();
-            showlogin();
+            showLogin();
         });
     }
 
@@ -157,7 +166,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (login_to_signup) {
         login_to_signup.addEventListener("click", function (event) {
             event.preventDefault();
-            showsignup();
+            showSignup();
         });
     }
 
@@ -166,7 +175,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (logout_varriable) {
         logout_varriable.addEventListener("click", function (event) {
             event.preventDefault();
-            console.log("logout")
             logout();
         });
     }
@@ -177,22 +185,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //onload function
 window.onload = function (event) {
-    // localStorage.clear();
-    // sessionStorage.clear();
+    //if need to clear data code here
     if (sessionStorage.getItem('Loggedin') === 'True') {
-        showdata(event);
-        showmain();
+        showData(event);
+        showMain();
     } else {
-        showlogin();
+        showLogin();
     }
 };
 //onload function
 
 
 //onchange functions
-function v_name() {
+function nameOnChange() {
     name_text = document.getElementById("Name").value;
-    if (vname(name_text)) {
+    if (varifyName(name_text)) {
         document.getElementById("Name").classList.remove("invalid");
         document.getElementById("invalid_name").style.display = 'none';
     } else {
@@ -202,10 +209,10 @@ function v_name() {
     activateButton();
 }
 
-function v_number() {
+function numberOnChange() {
     number = document.getElementById("Number").value;
     num_int = parseInt(number)
-    if (vnumber(number)) {
+    if (varifyNumber(number)) {
         document.getElementById("Number").classList.remove("invalid");
         document.getElementById("invalid_number").style.display = 'none';
     } else {
@@ -215,9 +222,9 @@ function v_number() {
     activateButton();
 }
 
-function v_email() {
+function emailOnChange() {
     email = document.getElementById("Email").value;
-    if (vemail(email)) {
+    if (varifyEmail(email)) {
         document.getElementById("Email").classList.remove("invalid");
         document.getElementById("invalid_email").style.display = 'none';
     } else {
@@ -227,9 +234,9 @@ function v_email() {
     activateButton()
 }
 
-function v_link() {
+function linkedinOnChange() {
     let linkedin = document.getElementById("Linkedin").value;
-    if (vlink(linkedin)) {
+    if (varifyLinkedin(linkedin)) {
         document.getElementById("Linkedin").classList.remove("invalid");
         document.getElementById("invalid_link").style.display = 'none';
     } else {
@@ -239,9 +246,9 @@ function v_link() {
     activateButton()
 }
 
-function v_git() {
+function githubOnChange() {
     github = document.getElementById("Github").value;
-    if (vgit(github)) {
+    if (varifyGithub(github)) {
         document.getElementById("Github").classList.remove("invalid");
         document.getElementById("invalid_git").style.display = 'none';
     } else {
@@ -251,9 +258,9 @@ function v_git() {
     activateButton();
 }
 
-function v_image() {
+function imageOnChange() {
     let image = document.getElementById("Image").value;
-    if (vimage(image)) {
+    if (varifyImage(image)) {
         document.getElementById("Image").classList.remove("invalid");
         document.getElementById("invalid_img").style.display = 'none';
     } else {
@@ -276,9 +283,9 @@ function checkExistingUsername(name) {
     }
 }
 
-function v_username() {
+function usernameOnchange() {
     name_text = document.getElementById("username_signup").value;
-    if (vname(name_text)) {
+    if (varifyName(name_text)) {
         if (checkExistingUsername(name_text)) {
             document.getElementById("username_signup").classList.add("invalid");
             document.getElementById("usernameAlreadyInUse").style.display = 'block';
@@ -294,7 +301,7 @@ function v_username() {
     activateSignupButton();
 }
 
-function v_password() {
+function passwordOnchange() {
     let password = document.getElementById("password_signup").value;
     let confirmPassword = document.getElementById("password_signup_confirm").value;
     if (varifyPassword(password, confirmPassword)) {
@@ -313,7 +320,7 @@ function v_password() {
 
 
 //verification functions
-function vname(name) {
+function varifyName(name) {
     const isValid = /^[A-Za-z][A-Za-z0-9_$ ]*$/.test(name);
     if (name == "" || isValid == false) {
         return false;
@@ -322,7 +329,7 @@ function vname(name) {
     }
 }
 
-function vnumber(number) {
+function varifyNumber(number) {
     if ((number == "") || (number > 9999999999) || (number < 2002000000)) {
         return false;
     } else {
@@ -330,7 +337,7 @@ function vnumber(number) {
     }
 }
 
-function vemail(email) {
+function varifyEmail(email) {
     text = email;
     let indexa = text.indexOf("@");
     let indexdot = text.indexOf(".");
@@ -341,7 +348,7 @@ function vemail(email) {
     }
 }
 
-function vlink(linkedin) {
+function varifyLinkedin(linkedin) {
     text = linkedin;
     let indexa = text.indexOf("https://linkedin.com");
     let indexb = text.indexOf("https://www.linkedin.com");
@@ -352,7 +359,7 @@ function vlink(linkedin) {
     }
 }
 
-function vgit(github) {
+function varifyGithub(github) {
     if (github == undefined) {
         return false;
     } else {
@@ -366,7 +373,7 @@ function vgit(github) {
     }
 }
 
-function vimage(image_link) {
+function varifyImage(image_link) {
     text = image_link;
     let indexa = text.indexOf("https://");
     if (indexa != 0) {
@@ -387,26 +394,26 @@ function varifyPassword(password, confirmPassword) {
         return false;
     }
 }
-//onsubmit verification functions
+//verification functions
 
 
 
 
 //display and hide functions
-function showlogin() {
+function showLogin() {
     document.getElementById('login_div').style.display = 'block';
     document.getElementById('signup').style.display = 'none';
     document.getElementById('main').style.display = 'none';
     document.getElementById('signup_form').reset();
 }
 
-function showmain() {
+function showMain() {
     document.getElementById('login_div').style.display = 'none';
     document.getElementById('signup').style.display = 'none';
     document.getElementById('main').style.display = 'block';
 }
 
-function showsignup() {
+function showSignup() {
     document.getElementById('login_div').style.display = 'none';
     document.getElementById('signup').style.display = 'block';
     document.getElementById('main').style.display = 'none';
@@ -417,7 +424,7 @@ function showsignup() {
 
 
 //reload function
-function reload_page() {
+function reloadPage() {
     location.reload(true);
 }
 //reload function
@@ -442,20 +449,18 @@ function signup(event) {
         let existingData = JSON.parse(localStorage.getItem('Username'));
         existingData.push(JSON.parse(newUser));
         localStorage.setItem('Username', JSON.stringify(existingData));
-        console.log(JSON.stringify(existingData));
     } else {
         let newUserArray = [];
         newUserArray.push(JSON.parse(newUser));
         localStorage.setItem('Username', JSON.stringify(newUserArray));
-        console.log(JSON.stringify(newUserArray));
     }
     alert("Signup successful!");
-    showlogin();
+    showLogin();
 }
 //signup
 
 //login process
-function login_process(event) {
+function loginProcess(event) {
     event.preventDefault();
     let username = document.forms['login']['username'].value
     let password = document.forms['login']['password'].value
@@ -473,8 +478,8 @@ function login_process(event) {
                 if (usersArray[i].Password === password) {
                     sessionStorage.setItem('Loggedin', 'True');
                     sessionStorage.setItem('Username', username);
-                    showdata(event);
-                    showmain();
+                    showData(event);
+                    showMain();
                     return;
                 } else {
                     alert('Wrong password');
@@ -496,7 +501,7 @@ function login_process(event) {
 
 
 //varify and put the data in users
-function varify_and_input() {
+function input() {
     let name = document.forms["myform"]["Name"].value;
     let email = document.forms["myform"]["Email"].value;
     let number = document.forms["myform"]["Number"].value;
@@ -550,7 +555,7 @@ function varify_and_input() {
         sessionStorage.setItem(key, JSON.stringify(data));
     }
 
-    reload_page();
+    reloadPage();
 }
 //varify and put the data in users
 
@@ -580,8 +585,8 @@ function show(key, storage, event) {
                 <p class="card-text">{{number}}</p>
                 <button class="btn btn-primary" onclick="window.open('{{github}}')">Github</button>
                 <button class="btn btn-primary" onclick="window.open('{{linkedin}}')">LinkedIn</button> <br>
-                <button class="btn btn-primary" onclick="edit_in_form(event, '{{key}}', '{{storage}}')">Edit</button>
-                <button class="btn btn-primary" onclick="del('{{key}}', '{{storage}}')">Delete</button>
+                <button class="btn btn-primary" onclick="editInForm(event, '{{key}}', '{{storage}}')">Edit</button>
+                <button class="btn btn-primary" onclick="deleteData('{{key}}', '{{storage}}')">Delete</button>
             </div>
             <br>
         </div>
@@ -601,12 +606,11 @@ function show(key, storage, event) {
 
 
 //shows inputted data
-function showdata(event) {
+function showData(event) {
     //local show
     let storage_of_show = "local"
     event.preventDefault();
     let username = sessionStorage.getItem('Username');
-    console.log(username);
     for (let i = 0; i < localStorage.length; i++) {
         let lsKey = localStorage.key(i);
         if (lsKey.includes(username)) {
@@ -631,10 +635,10 @@ function showdata(event) {
 
 
 //puting existing value to the form for edit
-function edit_in_form(event, key, storage) {
+function editInForm(event, key, storage) {
     event.preventDefault();
     let data;
-
+    console.log(key);
     if (storage === 'session') {
         data = JSON.parse(sessionStorage.getItem(key));
     } else if (storage === 'local') {
@@ -673,12 +677,11 @@ function edit_in_form(event, key, storage) {
         storage_input.value = storage;
         document.getElementById("myform").appendChild(storage_input);
 
-        document.getElementById("submit_button").innerText = "Edit";
-        let form = document.getElementById("myform");
-        form.onsubmit = function (event) {
-            event.preventDefault();
-            edit_submit(event, key);
-        }
+        submitButton = document.getElementById("submit_button");
+        submitButton.style.display = 'none';
+
+        editButton = document.getElementById("edit_button");
+        editButton.style.display = 'block';
     }
     activateButton();
 }
@@ -688,7 +691,7 @@ function edit_in_form(event, key, storage) {
 
 
 //submitting edited value
-function edit_submit(event, key) {
+function editSubmit(event) {
     event.preventDefault();
 
     let name = document.forms["myform"]["Name"].value;
@@ -697,6 +700,7 @@ function edit_submit(event, key) {
     let github = document.forms["myform"]["Github"].value;
     let linkedin = document.forms["myform"]["Linkedin"].value;
     let img_link = document.forms["myform"]["Image"].value;
+    let key = document.forms["myform"]["key"].value;
     let storages = document.getElementsByName('Rad');
     let storage = null;
     for (const radio of storages) {
@@ -706,7 +710,6 @@ function edit_submit(event, key) {
         }
     }
     let old_storage = document.forms["myform"]["old_storage"].value;
-    let key_form = document.forms["myform"]["key"].value;
 
     let data = {
         "Name": name,
@@ -716,14 +719,13 @@ function edit_submit(event, key) {
         "Linkedin": linkedin,
         "Img_Link": img_link,
         "Storage": storage,
-        "Key": key_form,
         "Old_Storage": old_storage
     };
 
     // Remove old entry
-    if (old_storage === 'session') {
+    if (old_storage == 'session') {
         sessionStorage.removeItem(key);
-    } else if (old_storage === 'local') {
+    } else {
         localStorage.removeItem(key);
     }
 
@@ -734,19 +736,19 @@ function edit_submit(event, key) {
         localStorage.setItem(key, JSON.stringify(data));
     }
 
-    reload_page();
+    reloadPage();
 }
 //submitting edited value
 
 
 //delete
-function del(key, storage) {
+function deleteData(key, storage) {
     if (storage === 'session') {
         sessionStorage.removeItem(key);
     } else if (storage === 'local') {
         localStorage.removeItem(key);
     }
-    reload_page();
+    reloadPage();
 }
 //delete
 
@@ -754,6 +756,6 @@ function del(key, storage) {
 function logout() {
     sessionStorage.removeItem('Loggedin');
     sessionStorage.removeItem('Username');
-    showlogin();
+    showLogin();
 }
 //logout
