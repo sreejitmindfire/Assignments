@@ -46,134 +46,135 @@ function activateButton() {
 //event listners
 document.addEventListener("DOMContentLoaded", function () {
     //signup form submit
-    const signup_form = document.getElementById("signup_form");
-    if (signup_form) {
-        signup_form.addEventListener("submit", function (event) {
+    const signupForm = document.getElementById("signup_form");
+    if (signupForm) {
+        signupForm.addEventListener("submit", function (event) {
             event.preventDefault();
             signup(event);
         });
     }
 
-    const edit_form = document.getElementById("edit_form");
-    if (signup_form) {
-        signup_form.addEventListener("submit", function (event) {
+    //edit data
+    const editForm = document.getElementById("edit_form");
+    if (editForm) {
+        editForm.addEventListener("submit", function (event) {
             event.preventDefault();
             editSubmit(event);
         });
     }
 
     //login form submit
-    const login_form = document.getElementById("login");
-    if (login_form) {
-        login_form.addEventListener("submit", function (event) {
+    const loginForm = document.getElementById("login");
+    if (loginForm) {
+        loginForm.addEventListener("submit", function (event) {
             event.preventDefault();
             loginProcess(event);
         });
     }
 
     //data submit
-    const data_form = document.getElementById("myform");
-    if (data_form) {
-        data_form.addEventListener("submit", function (event) {
+    const dataForm = document.getElementById("myform");
+    if (dataForm) {
+        dataForm.addEventListener("submit", function (event) {
             event.preventDefault();
             input(event);
         });
     }
 
     //signup username onchange
-    const username_signup_change = document.getElementById("username_signup");
-    if (username_signup_change) {
-        username_signup_change.addEventListener("change", function (event) {
+    const usernameSignupChange = document.getElementById("username_signup");
+    if (usernameSignupChange) {
+        usernameSignupChange.addEventListener("change", function (event) {
             event.preventDefault();
             usernameOnchange();
         });
     }
 
     //signup password onchange
-    const username_password_change = document.getElementById("password_signup_confirm");
-    if (username_password_change) {
-        username_password_change.addEventListener("change", function (event) {
+    const usernamePasswordChange = document.getElementById("password_signup_confirm");
+    if (usernamePasswordChange) {
+        usernamePasswordChange.addEventListener("change", function (event) {
             event.preventDefault();
             passwordOnchange();
         });
     }
 
     //name change main form
-    const name_change = document.getElementById("Name");
-    if (name_change) {
-        name_change.addEventListener("change", function (event) {
+    const nameChange = document.getElementById("Name");
+    if (nameChange) {
+        nameChange.addEventListener("change", function (event) {
             event.preventDefault();
             nameOnChange();
         });
     }
 
     //email change main form
-    const email_change = document.getElementById("Email");
-    if (email_change) {
-        email_change.addEventListener("change", function (event) {
+    const emailChange = document.getElementById("Email");
+    if (emailChange) {
+        emailChange.addEventListener("change", function (event) {
             event.preventDefault();
             emailOnChange();
         });
     }
 
     //number change main form
-    const number_change = document.getElementById("Number");
-    if (number_change) {
-        number_change.addEventListener("change", function (event) {
+    const numberChange = document.getElementById("Number");
+    if (numberChange) {
+        numberChange.addEventListener("change", function (event) {
             event.preventDefault();
             numberOnChange();
         });
     }
 
     //github change main form
-    const git_change = document.getElementById("Github");
-    if (git_change) {
-        git_change.addEventListener("change", function (event) {
+    const githubChange = document.getElementById("Github");
+    if (githubChange) {
+        githubChange.addEventListener("change", function (event) {
             event.preventDefault();
             githubOnChange();
         });
     }
 
     //linkedin change main form
-    const link_change = document.getElementById("Linkedin");
-    if (link_change) {
-        link_change.addEventListener("change", function (event) {
+    const linkedinChange = document.getElementById("Linkedin");
+    if (linkedinChange) {
+        linkedinChange.addEventListener("change", function (event) {
             event.preventDefault();
             linkedinOnChange();
         });
     }
 
     //image change main form
-    const image_change = document.getElementById("Image");
-    if (image_change) {
-        image_change.addEventListener("change", function (event) {
+    const imageChange = document.getElementById("Image");
+    if (imageChange) {
+        imageChange.addEventListener("change", function (event) {
             event.preventDefault();
             imageOnChange();
         });
     }
 
     //signup to login button click
-    const signup_to_login = document.getElementById("showlogin");
-    if (signup_to_login) {
-        signup_to_login.addEventListener("click", function (event) {
+    const signupToLogin = document.getElementById("showlogin");
+    if (signupToLogin) {
+        signupToLogin.addEventListener("click", function (event) {
             event.preventDefault();
             showLogin();
         });
     }
 
     //login to signup button click
-    const login_to_signup = document.getElementById("showsignup");
-    if (login_to_signup) {
-        login_to_signup.addEventListener("click", function (event) {
+    const loginToSignup = document.getElementById("showsignup");
+    if (loginToSignup) {
+        loginToSignup.addEventListener("click", function (event) {
             event.preventDefault();
             showSignup();
         });
     }
 
     //logout button click
-    const logout_varriable = document.getElementById("logout_button");
-    if (logout_varriable) {
-        logout_varriable.addEventListener("click", function (event) {
+    const logoutButton = document.getElementById("logout_button");
+    if (logoutButton) {
+        logoutButton.addEventListener("click", function (event) {
             event.preventDefault();
             logout();
         });
@@ -198,8 +199,8 @@ window.onload = function (event) {
 
 //onchange functions
 function nameOnChange() {
-    name_text = document.getElementById("Name").value;
-    if (varifyName(name_text)) {
+    let name = document.getElementById("Name").value;
+    if (varifyName(name)) {
         document.getElementById("Name").classList.remove("invalid");
         document.getElementById("invalid_name").style.display = 'none';
     } else {
@@ -210,8 +211,7 @@ function nameOnChange() {
 }
 
 function numberOnChange() {
-    number = document.getElementById("Number").value;
-    num_int = parseInt(number)
+    let number = document.getElementById("Number").value;
     if (varifyNumber(number)) {
         document.getElementById("Number").classList.remove("invalid");
         document.getElementById("invalid_number").style.display = 'none';
@@ -223,7 +223,7 @@ function numberOnChange() {
 }
 
 function emailOnChange() {
-    email = document.getElementById("Email").value;
+    let email = document.getElementById("Email").value;
     if (varifyEmail(email)) {
         document.getElementById("Email").classList.remove("invalid");
         document.getElementById("invalid_email").style.display = 'none';
@@ -247,7 +247,7 @@ function linkedinOnChange() {
 }
 
 function githubOnChange() {
-    github = document.getElementById("Github").value;
+    let github = document.getElementById("Github").value;
     if (varifyGithub(github)) {
         document.getElementById("Github").classList.remove("invalid");
         document.getElementById("invalid_git").style.display = 'none';
@@ -284,9 +284,9 @@ function checkExistingUsername(name) {
 }
 
 function usernameOnchange() {
-    name_text = document.getElementById("username_signup").value;
-    if (varifyName(name_text)) {
-        if (checkExistingUsername(name_text)) {
+    let username = document.getElementById("username_signup").value;
+    if (varifyName(username)) {
+        if (checkExistingUsername(username)) {
             document.getElementById("username_signup").classList.add("invalid");
             document.getElementById("usernameAlreadyInUse").style.display = 'block';
             document.getElementById("invalid_username").style.display = 'none';
